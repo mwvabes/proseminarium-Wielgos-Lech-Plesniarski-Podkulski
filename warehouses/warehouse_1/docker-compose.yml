@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  app-service:
+    build: "./app"
+    ports: 
+      - "3005:3000"
+    networks:
+      - wh1-network
+
+  api-service:
+    build: './api'
+    volumes: 
+      - ./api:/home/node/app
+    ports: 
+      - "8005:8005"
+    networks:
+      - wh1-network
+    depends_on:
+      - db-service
+    
+
+
+  db-service:
+    image: mongo:3.6.19-xenial
+    ports: 
+      - "2717:27017"
+    networks:
+      - wh1-network
+    volumes:
+      - db-data:/data/db
+
+networks:
+  wh1-network:
+    driver: bridge
+volumes:
+  db-data:
+    driver: local
