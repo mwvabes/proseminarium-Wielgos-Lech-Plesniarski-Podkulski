@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "name": "Samsung 500GB 2,5\" SATA SSD 860 EVO",
+    "price": 299.00,
+    "dim_x": 15.0,
+    "dim_y": 5.4,
+    "dim_z": 35.0,
+    "EAN": "4069614069611",
+    "category_name": "SSD_drives"
+  },
+  {
+    "id": "2",
+    "name": "Samsung 500GB M.2 PCIe NVMe 970 EVO",
+    "price": 349.00,
+    "dim_x": 15.0,
+    "dim_y": 2.5,
+    "dim_z": 4.0,
+    "EAN": "4311424311421",
+    "category_name": "SDD_drives"
+  },
+  {
+    "id": "3",
+    "name": "MSI GeForce RTX 3080 VENTUS 3X OC 10GB GDDR6X",
+    "price": 3659.00,
+    "dim_x": 55.0,
+    "dim_y": 20.5,
+    "dim_z": 40.0,
+    "EAN": "5897425897421",
+    "category_name": "graphic_cards"
+  },
+  {
+    "id": "4",
+    "name": "MSI GeForce RTX 3080 VENTUS 3X OC 10GB GDDR6X",
+    "price": 3659.00,
+    "dim_x": 55.0,
+    "dim_y": 20.5,
+    "dim_z": 40.0,
+    "EAN": "5897425897421",
+    "category_name": "graphic_cards"
+  },
+  {
+    "id": "5",
+    "name": "AMD Ryzen 5 3600",
+    "price": 1059.00,
+    "dim_x": 25.0,
+    "dim_y": 25.0,
+    "dim_z": 25.0,
+    "EAN": "5000855000851",
+    "category_name": "CPUs"
+  }
+]
