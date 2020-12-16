@@ -2,13 +2,19 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const { join } = require("path")
 const axios = require("axios")
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 
-// app.use(bodyParser.urlencoded({extended: false}))
-// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
-app.use('/api/stock', require('./routes/stock.route'))
+require("./routes/stock.route")(app);
+require("./routes/parcels.route")(app);
+
+// app.use('/api/stock', require('./routes/stock.route'))
+// app.use('/api/parcels', require('./routes/parcels.route'))
 
 app.get('/', (request, result) => {
   // Stock.find({}).then(res => {
