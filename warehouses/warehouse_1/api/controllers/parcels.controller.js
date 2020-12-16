@@ -34,7 +34,7 @@ exports.addParcel = (request, result) => {
     result.json(
       r
     )
-    //mongoose.connection.close()
+    mongoose.connection.close()
   })
 
 }
@@ -44,75 +44,75 @@ exports.confirmArrival = (request, result) => {
 
   mongoose.connect(db.url, db.attr)
 
-  Parcel.findOneAndUpdate({ _id: request.query.parcelId }, { status: "arrived" }, { upsert: true }).then((r) => {
-
-    //console.log("x", r)
-    //mongoose.connection.close()
-
-    for (product of r.products) {
-      
-      Stock.findOne({ productId: product.productId}).then(stock => {
-        console.log("STOCK", stock)
-        //mongoose.connect(db.url, db.attr)
-        if (stock != null) {
-          stock.availableQuantity += product.quantity
-          stock.save().catch(e => console.log("ERROR", e))
-        } else {
-          const stock = new Stock({
-            productId: product.productId,
-            availableQuantity: product.quantity
-          })
-          stock.save().catch(e => console.log("ERROR", e))
-        }
+  Parcel.findById({ _id: request.query.parcelId}).then(parcel => {
+    if (parcel == null) {
+      return result.status(400).json({
+        error: "Parcel not found."
+      })
+    } else if (parcel.status != "in_shipping") {
+      return result.status(400).json({
+        error: "Parcel status error or parcel has been already delivered."
       })
     }
-
-    result.json({
-      success: "Operation successful!"
+    parcel.status = "delivered"
+    parcel.save()
+    
+    mongoose.connect(db.url, db.attr)
+    return parcel.products
+  }).then(products => {
+    console.log("PRODUCTS", products)
+    products.forEach(product => {
+      Stock.findOne({ productId: product.productId}).then(foundProduct => {
+        if (foundProduct == null) {
+          axios
+          .post(`http://localhost:8005/api/stock/setStock?productId=${product.productId}&availableQuantity=${product.quantity}`)
+        }
+        else {
+          axios
+          .post(`http://localhost:8005/api/stock/updateStock?productId=${product.productId}&availableQuantity=${product.quantity}`)
+        }
+      })
     })
-
-    // for (product of r.products) {
-      // Stock.findOne({ productId: product.productId }).then(stock => {
-      //   stock.availableQuantity += product[0].quantity
-      //   //console.log("NEW:", stock)
-      //   stock.save()
-      //   result.json({
-      //     r
-      //   })
-    
-    //for await (product of r.products) {
-      //console.log(product.productId)
-      // Stock.findOne({ productId: product.productId }).then(stock => {
-      //   stock.availableQuantity += product[0].quantity
-      //   console.log("NEW:", stock)
-      //   stock.save()
-      //   result.json({
-      //     r
-      //   })
-        
-      // })
-      //mongoose.connection.close()
-    //}
-
-      // for (product of r.products) {
-      //   Stock.findOne({ productId: request.query.productId }).then(stock => {
-
-      //     if (stock == null) {
-      //       return result.status(400).json({
-      //         error: "Product not found."
-      //       })
-      //     }
-      
-      //     Stock.findOneAndUpdate({productId: product.productId}, {availableQuantity: (Number(product.quantity) + Number(stock.availableQuantity))}, {upsert: true} ).then(r => {
-      //       result.json(
-      //         r
-      //       )
-      //     })
-      
-      //   })
-      // }
-    
+    return {success: "Success!"}
   })
+  .then(res => {
+    result.json({
+      res
+    })
+  })
+  
+  //console.log(await findOneParcel(request.query.parcelId))
+
+  // Parcel.findOneAndUpdate({ _id: request.query.parcelId }, { status: "arrived" }, { upsert: true }).then((r) => {
+
+  //   r.products.forEach(product => {
+  //     Stock.findOne({ productId: product.productId }).then(stock => {
+  //       console.log("STOCK", stock)
+  //       mongoose.connect(db.url, db.attr)
+  //       if (stock == null) {
+  //         const stockN = new Stock({
+  //           productId: product.productId,
+  //           availableQuantity: product.quantity
+  //         })
+  //         stockN.save().catch(e => console.log("ERROR", e))
+  //       }
+  //       // if (stock != null) {
+  //       //   stock.availableQuantity += product.quantity
+  //       //   stock.save().catch(e => console.log("ERROR", e))
+  //       // } else {
+  //       //   const stock = new Stock({
+  //       //     productId: product.productId,
+  //       //     availableQuantity: product.quantity
+  //       //   })
+  //       //   stock.save().catch(e => console.log("ERROR", e))
+  //       // }
+  //     })
+  //   })
+
+    //return Promise.all(r.products)
+
+    
+  
 
 }
 

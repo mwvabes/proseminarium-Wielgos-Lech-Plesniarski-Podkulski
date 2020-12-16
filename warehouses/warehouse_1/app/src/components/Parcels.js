@@ -43,9 +43,13 @@ const Parcels = () => {
     axios
       .post(`http://localhost:8005/api/parcels/confirmArrival?parcelId=${parcelId}`)
       .then(response => {
-        
+        //console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+        //fetchParcels()
       })
-      fetchParcels()
+      // .then(() =>
+      // fetchParcels()
+      // )
+      //fetchParcels()
   }
 
   // const handleProductIdChange = (event) => {

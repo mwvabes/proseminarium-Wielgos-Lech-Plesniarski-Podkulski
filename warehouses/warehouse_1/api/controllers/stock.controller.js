@@ -7,7 +7,8 @@ exports.getStock = (request, result) => {
 
   mongoose.connect(db.url, db.attr)
 
-  Stock.find({}).sort({ updatedAt: "desc" }).then(stock => {
+  //Stock.find({}).sort({ updatedAt: "desc" }).then(stock => {
+  Stock.find({}).then(stock => {
     result.json({
       stock
     })
