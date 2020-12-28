@@ -10,8 +10,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-require("./routes/stock.route")(app);
-require("./routes/parcels.route")(app);
+require("./routes/stock.route")(app)
+require("./routes/parcels.route")(app)
 
 // app.use('/api/stock', require('./routes/stock.route'))
 // app.use('/api/parcels', require('./routes/parcels.route'))

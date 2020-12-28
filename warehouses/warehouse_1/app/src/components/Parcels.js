@@ -44,45 +44,14 @@ const Parcels = () => {
       .post(`http://localhost:8005/api/parcels/confirmArrival?parcelId=${parcelId}`)
       .then(response => {
         //console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-        //fetchParcels()
+        fetchParcels()
       })
+      
       // .then(() =>
       // fetchParcels()
       // )
       //fetchParcels()
   }
-
-  // const handleProductIdChange = (event) => {
-  //   setFormProductId(event.target.value)
-  // }
-
-  // const handleAvailableQuantityChange = (event) => {
-  //   setFormAvailableQuantity(event.target.value)
-  // }
-
-  // const updateStock = (productId, availableQuantity) => {
-  //   axios
-  //     .post(`http://localhost:8005/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
-  //     .then(response => {
-  //       fetchStock()
-  //     })
-  // }
-
-  // const setStock = () => {
-  //   axios
-  //     .post(`http://localhost:8005/api/stock/setStock?productId=${formProductId}&availableQuantity=${formAvailableQuantity}`)
-  //     .then(response => {
-  //       fetchStock()
-  //     })
-  // }
-
-  // const removeAllStock = () => {
-  //   axios
-  //     .delete(`http://localhost:8005/api/stock/deleteAll`)
-  //     .then(response => {
-  //       setStockInfo([])
-  //     })
-  // }
 
   const columns = [
     {
