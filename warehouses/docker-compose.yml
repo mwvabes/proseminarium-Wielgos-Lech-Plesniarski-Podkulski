@@ -1,0 +1,77 @@
+version: "3"
+
+services:
+  app-service-wh1:
+    build: "./app"
+    volumes: 
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    ports: 
+      - "3005:3000"
+    networks:
+      - wh1-network
+
+  api-service-wh1:
+    build: './api'
+    volumes: 
+      - ./api:/usr/src/app
+      - /usr/src/api/node_modules
+    ports: 
+      - "8005:8005"
+    networks:
+      - wh1-network
+    depends_on:
+      - db-service
+
+  db-service-wh1:
+    image: mongo:3.6.19-xenial
+    ports: 
+      - "2720:27017"
+    networks:
+      - wh1-network
+    volumes:
+      - db-data:/data/db
+
+  app-service-wh2:
+    build: "./app"
+    volumes: 
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    ports: 
+      - "3006:3000"
+    networks:
+      - wh2-network
+
+  api-service-wh2:
+    build: './api'
+    volumes: 
+      - ./api:/usr/src/app
+      - /usr/src/api/node_modules
+    ports: 
+      - "8006:8005"
+    networks:
+      - wh2-network
+    depends_on:
+      - db-service
+
+  db-service-wh2:
+    image: mongo:3.6.19-xenial
+    ports: 
+      - "2721:27017"
+    networks:
+      - wh2-network
+    volumes:
+      - db-data:/data/db
+
+networks:
+  wh1-network:
+    driver: bridge
+  wh2-network:
+    driver: bridge
+volumes:
+  db-data:
+    driver: local
