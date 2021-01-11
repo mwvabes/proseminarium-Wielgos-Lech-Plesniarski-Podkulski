@@ -24,7 +24,7 @@ router.post("/register", async (req, res, next) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    phone: req.body.password,
+    phone: req.body.phone,
     address: req.body.address,
     verificationCode: crypto.randomBytes(16).toString("hex"),
     scopes: [{ clientId: env.id, scopes: ["user"] }],
