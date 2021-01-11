@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,20 +10,13 @@ import Header from './components/Header'
 import Stock from './components/Stock'
 import Parcels from './components/Parcels'
 
+const App = () => {
 
-function App() {
   return (
     <main>
       <Router>
         <div>
-          <Menu mode="horizontal">
-            <Menu.Item key="stock_link">
-              <Link to="/">Stan</Link>
-            </Menu.Item>
-            <Menu.Item key="parcels_link">
-              <Link to="/parcels">Przesyłki</Link>
-            </Menu.Item>
-          </Menu>
+          <Header />
 
           <hr />
 

@@ -7,7 +7,6 @@ const db = require("../config/dbconfig")
 
 exports.getParcels = (request, result) => {
 
-  console.log("GETTTTTTTTTTTTT")
   mongoose.connect(db.url, db.attr)
 
   Parcel.find({}).sort({ updatedAt: "desc" }).then(parcel => {
@@ -70,10 +69,10 @@ exports.confirmArrival = (request, result) => {
 
         let keyword = s.length == 0 ? "set" : "update"
 
-        return axios.post(`http://localhost:8005/api/stock/${keyword}Stock?productId=${product.productId}&availableQuantity=${product.quantity}`).catch(e => { })
+        return axios.post(`http://api-service:8005/api/stock/${keyword}Stock?productId=${product.productId}&availableQuantity=${product.quantity}`).catch(e => { })
       })
       Promise.all(promises).then(res => {
-        console.log("Execute this at the very end after axios are done")
+        //console.log("Execute this at the very end after axios are done")
         result.json({
           success: "Success!"
         })

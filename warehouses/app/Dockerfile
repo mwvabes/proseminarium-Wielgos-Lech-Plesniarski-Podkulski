@@ -1,14 +1,29 @@
-FROM node:10
-# USER node
+# FROM node:10
+# # USER node
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-COPY ./package.json ./
+# COPY ./package.json ./
 
-RUN npm install
+# RUN npm install
 
-COPY . .
+# COPY . .
 
-EXPOSE 3000
+# EXPOSE 3000
 
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
+
+# stage 1
+FROM node:13.12.0-alpine as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY . /app
+RUN npm cache clean --force
+RUN npm ci --loglevel verbose
+RUN npm run build
+
+# # stage 2
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

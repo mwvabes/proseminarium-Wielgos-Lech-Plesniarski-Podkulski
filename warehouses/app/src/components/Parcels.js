@@ -31,26 +31,22 @@ const Parcels = () => {
 
   const fetchParcels = () => {
     axios
-      .get(`http://localhost:8005/api/parcels`)
+      .get(`http://api-service:8005/api/parcels`)
       .then(response => {
+        console.log(response)
         setParcelsInfo(response.data.parcel)
       })
+      .catch(e => console.log(e))
   }
 
   useEffect(fetchParcels, [])
 
   const confirmParcelArrival = (parcelId) => {
     axios
-      .post(`http://localhost:8005/api/parcels/confirmArrival?parcelId=${parcelId}`)
+      .post(`http://api-service:8005/api/parcels/confirmArrival?parcelId=${parcelId}`)
       .then(response => {
-        //console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
         fetchParcels()
       })
-      
-      // .then(() =>
-      // fetchParcels()
-      // )
-      //fetchParcels()
   }
 
   const columns = [
@@ -66,18 +62,6 @@ const Parcels = () => {
       key: 'sender',
       render: (text, row) => <ParcelSettings parcelId={row._id} status={row.status} confirmParcelArrival={confirmParcelArrival} />,
     },
-    // {
-    //   title: 'Dostępna ilość',
-    //   key: 'availableQuantity',
-    //   dataIndex: 'availableQuantity',
-    //   render: text => <a>{text}</a>,
-    // },
-    // {
-    //   title: 'Dodaj ilość',
-    //   key: 'addQuantityInput',
-    //   dataIndex: 'productId',
-    //   render: productId => <InputQuantity productId={productId} updateStock={updateStock} />,
-    // }
   ]
 
   const subColumns = [

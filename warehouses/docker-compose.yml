@@ -9,9 +9,16 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
     ports: 
-      - "3005:3000"
+      - "3006:3000"
     networks:
-      - wh1-network
+      wh1-network:
+        aliases:
+          - appservice
+    env_file:
+      - ./env/wh1.env
+    #links:
+    #  - "db-service-wh1:db-service"
+    #  - "api-service-wh1:api-service"
 
   api-service-wh1:
     build: './api'
@@ -19,59 +26,101 @@ services:
       - ./api:/usr/src/app
       - /usr/src/api/node_modules
     ports: 
-      - "8005:8005"
+      - "8006:80"
     networks:
-      - wh1-network
+      wh1-network:
+        aliases:
+          - apiservice
     depends_on:
-      - db-service
+      - db-service-wh1
+    env_file:
+      - ./env/wh1.env
+    #links:
+     # - "db-service-wh1:db-service"
+    #  - "app-service-wh1:app-service"
 
   db-service-wh1:
     image: mongo:3.6.19-xenial
     ports: 
-      - "2720:27017"
+      - "2726:27017"
+    networks:
+      wh1-network:
+        aliases:
+          - dbservice
+    volumes:
+      - db-data-wh1:/data/db
+    env_file:
+      - ./env/wh1.env
+
+  revproxy-wh1:
+    build: ./revproxy
+    image: "reverseproxy:1.0.0"
     networks:
       - wh1-network
-    volumes:
-      - db-data:/data/db
+    ports:
+      - "80:80"
 
-  app-service-wh2:
-    build: "./app"
-    volumes: 
-      - ./app:/usr/src/app
-      - /usr/src/app/node_modules
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-    ports: 
-      - "3006:3000"
-    networks:
-      - wh2-network
+  # app-service-wh2:
+  #   build: "./app"
+  #   volumes: 
+  #     - ./app:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   environment:
+  #     CHOKIDAR_USEPOLLING: "true"
+  #   ports: 
+  #     - "3007:3000"
+  #   networks:
+  #     - wh2-network
+  #       #aliases:
+  #       #  - appservice
+  #   env_file:
+  #     - ./env/wh2.env
+  #   #links:
+  #   #  - "db-service-wh2:db-service"
+  #    # - "api-service-wh2:api-service"
 
-  api-service-wh2:
-    build: './api'
-    volumes: 
-      - ./api:/usr/src/app
-      - /usr/src/api/node_modules
-    ports: 
-      - "8006:8005"
-    networks:
-      - wh2-network
-    depends_on:
-      - db-service
+  # api-service-wh2:
+  #   build: './api'
+  #   volumes: 
+  #     - ./api:/usr/src/app
+  #     - /usr/src/api/node_modules
+  #   ports: 
+  #     - "8007:8005"
+  #   networks:
+  #     wh2-network:
+  #       aliases:
+  #         - apiservice
+  #   depends_on:
+  #     - db-service-wh2
+  #   env_file:
+  #     - ./env/wh2.env
+  #   #links:
+  #     #- "db-service-wh2:db-service"
+  #    # - "app-service-wh2:app-service"
 
-  db-service-wh2:
-    image: mongo:3.6.19-xenial
-    ports: 
-      - "2721:27017"
-    networks:
-      - wh2-network
-    volumes:
-      - db-data:/data/db
+  # db-service-wh2:
+  #   image: mongo:3.6.19-xenial
+  #   ports: 
+  #     - "2727:27017"
+  #   networks:
+  #     wh2-network:
+  #       aliases:
+  #         - dbservice
+  #   volumes:
+  #     - db-data-wh2:/data/db
+  #   env_file:
+  #     - ./env/wh2.env
 
 networks:
   wh1-network:
-    driver: bridge
+  #  driver: bridge
   wh2-network:
-    driver: bridge
+  #  driver: bridge
 volumes:
-  db-data:
+  db-data-wh1:
     driver: local
+  db-data-wh2:
+    driver: local
+
+# You need to bind to different ports then centralize them using a loadbalancer that reverse proxies like HAproxy or nginx even
+# [nginx-container] ---> [svc1:8001,svc2:8002,svc3:8003]
