@@ -69,7 +69,7 @@ exports.confirmArrival = (request, result) => {
 
         let keyword = s.length == 0 ? "set" : "update"
 
-        return axios.post(`http://api-service:8005/api/stock/${keyword}Stock?productId=${product.productId}&availableQuantity=${product.quantity}`).catch(e => { })
+        return axios.post(`http://localhost:90/api/stock/${keyword}Stock?productId=${product.productId}&availableQuantity=${product.quantity}`).catch(e => { })
       })
       Promise.all(promises).then(res => {
         //console.log("Execute this at the very end after axios are done")

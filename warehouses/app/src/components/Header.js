@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Menu } from 'antd'
 import {
   BrowserRouter as Router,
@@ -12,9 +13,13 @@ const Header = () => {
   const [whName, setWhName] = useState(null)
   
   const getWhName = () => {
-    setWhName(process.env.REACT_APP_WH_NAME)
-    console.log(process.env)
-    console.log(window)
+    console.log("Resolving WH name")
+    axios
+    .get(`http://localhost:90/api`)
+    .then(response => {
+      console.log("RESOLVED", response)
+      setWhName(response.data.name)
+    })
   }
 
   useEffect(getWhName, [])

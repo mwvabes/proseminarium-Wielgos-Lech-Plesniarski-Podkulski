@@ -15,7 +15,7 @@ require("./routes/parcels.route")(app)
 
 app.get('/', (request, result) => {
   result.json({
-    "Success": "Working!"
+    "name": process.env.WHNAME
   })
 })
 
