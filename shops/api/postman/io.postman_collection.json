@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "e22cd5af-4d85-4f56-bb1c-95089e356268",
+		"name": "io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "kontrahenci",
+			"item": [
+				{
+					"name": "io-kontrahenci-findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/kontrahent/?size=20&page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"kontrahent",
+								""
+							],
+							"query": [
+								{
+									"key": "nip",
+									"value": "77",
+									"disabled": true
+								},
+								{
+									"key": "adres",
+									"value": "Idaho",
+									"disabled": true
+								},
+								{
+									"key": "nazwa",
+									"value": "Chorizon",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "20"
+								},
+								{
+									"key": "sort",
+									"value": "nip",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-kontrahenci-findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/kontrahent/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"kontrahent",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "podmiot",
+			"item": [
+				{
+					"name": "io-podmiot-create",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nazwa\": \"test\",\r\n    \"adres\": \"test\",\r\n    \"nip\": \"2194579313\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/podmiot/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"podmiot",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-podmiot-findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/podmiot/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"podmiot",
+								""
+							],
+							"query": [
+								{
+									"key": "nazwa",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "adres",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "nip",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "id",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-podmiot-findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/podmiot/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"podmiot",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-podmiot-update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nazwa\": \"test2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/podmiot/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"podmiot",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "produkty",
+			"item": [
+				{
+					"name": "io-produkt-findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produkt?nip=2194579313",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produkt"
+							],
+							"query": [
+								{
+									"key": "cenaNettoFrom",
+									"value": "13",
+									"disabled": true
+								},
+								{
+									"key": "cenaNettoTo",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "cenaBruttoFrom",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "cenaBruttoTo",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "nazwa",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "nip",
+									"value": "2194579313"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-produkt-findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/produkt/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"produkt",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "statusy",
+			"item": [
+				{
+					"name": "io-statusy-create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"typ\": \"DONE\",\r\n    \"opis\": \"testowy opis\",\r\n    \"zamowienieId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/status/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"status",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-statusy-findAllByOrderId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/status/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"status",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "zamowienia",
+			"item": [
+				{
+					"name": "io-zamowienia-create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"priorytet\": \"STANDARD\",\r\n    \"kontrahentId\": 1,\r\n    \"podmiotId\": 1,\r\n    \"pozycje_zamowienia\": [\r\n        {\"ilosc\": 12, \"id_produktu\": 1, \"cena_netto\": 12, \"procentowa_stawka_vat\": 23, \"nazwa\": \"test\"}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/zamowienie/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"zamowienie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-zamowienia-findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/zamowienie/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"zamowienie",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-zamowienia-findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/zamowienie/?page=0&size=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"zamowienie",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "priorytet",
+									"value": "STANDARD",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "priorytet",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "io-zamowienia-kontrahent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/zamowienie/kontrahent?page=0&size=10&nip=6858591237",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"zamowienie",
+								"kontrahent"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "nip",
+									"value": "6858591237"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

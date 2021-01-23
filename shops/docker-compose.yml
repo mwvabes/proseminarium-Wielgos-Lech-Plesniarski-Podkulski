@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  db-service:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: shop
+    ports:
+      - "3306:3306"
+    networks:
+      - sh1-network
+    volumes:
+      - db-data:/data/db
+
+  api-service:
+    build: "./api"
+    volumes:
+      - ./api:/usr/src/api
+      - /usr/src/api/node_modules
+    ports:
+      - "8080:8080"
+    networks:
+      - sh1-network
+    depends_on:
+      - db-service
+
+  app-service:
+    build: "./app"
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8081:8081"
+    networks:
+      - sh1-network
+
+networks:
+  sh1-network:
+    driver: bridge
+volumes:
+  db-data:
+    driver: local
