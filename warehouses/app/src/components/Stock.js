@@ -31,9 +31,13 @@ const Stock = () => {
 
   const fetchStock = () => {
     axios
-      .get(`http://localhost:8005/api/stock`)
+      .get(`http://localhost:90/api/stock`)
       .then(response => {
+        console.log(response)
         setStockInfo(response.data.stock)
+      })
+      .catch(e => {
+        console.log(e)
       })
   }
 
@@ -49,7 +53,7 @@ const Stock = () => {
 
   const updateStock = (productId, availableQuantity) => {
     axios
-      .post(`http://localhost:8005/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
+      .post(`http://localhost:90/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -57,7 +61,7 @@ const Stock = () => {
 
   const setStock = () => {
     axios
-      .post(`http://localhost:8005/api/stock/setStock?productId=${formProductId}&availableQuantity=${formAvailableQuantity}`)
+      .post(`http://localhost:90/api/stock/setStock?productId=${formProductId}&availableQuantity=${formAvailableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -65,7 +69,7 @@ const Stock = () => {
 
   const removeAllStock = () => {
     axios
-      .delete(`http://localhost:8005/api/stock/deleteAll`)
+      .delete(`http://localhost:90/api/stock/deleteAll`)
       .then(response => {
         setStockInfo([])
       })

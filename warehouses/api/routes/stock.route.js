@@ -11,6 +11,6 @@ module.exports = (app) => {
 
   router.delete('/deleteAll', stockController.deleteAllStock)
 
-  app.use('/api/stock', router)
+  app.use('/stock', router)
 
 }

@@ -31,58 +31,23 @@ const Parcels = () => {
 
   const fetchParcels = () => {
     axios
-      .get(`http://localhost:8005/api/parcels`)
+      .get(`http://localhost:90/api/parcels`)
       .then(response => {
+        console.log(response)
         setParcelsInfo(response.data.parcel)
       })
+      .catch(e => console.log(e))
   }
 
   useEffect(fetchParcels, [])
 
   const confirmParcelArrival = (parcelId) => {
     axios
-      .post(`http://localhost:8005/api/parcels/confirmArrival?parcelId=${parcelId}`)
+      .post(`http://localhost:90/api/parcels/confirmArrival?parcelId=${parcelId}`)
       .then(response => {
-        //console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-        //fetchParcels()
+        fetchParcels()
       })
-      // .then(() =>
-      // fetchParcels()
-      // )
-      //fetchParcels()
   }
-
-  // const handleProductIdChange = (event) => {
-  //   setFormProductId(event.target.value)
-  // }
-
-  // const handleAvailableQuantityChange = (event) => {
-  //   setFormAvailableQuantity(event.target.value)
-  // }
-
-  // const updateStock = (productId, availableQuantity) => {
-  //   axios
-  //     .post(`http://localhost:8005/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
-  //     .then(response => {
-  //       fetchStock()
-  //     })
-  // }
-
-  // const setStock = () => {
-  //   axios
-  //     .post(`http://localhost:8005/api/stock/setStock?productId=${formProductId}&availableQuantity=${formAvailableQuantity}`)
-  //     .then(response => {
-  //       fetchStock()
-  //     })
-  // }
-
-  // const removeAllStock = () => {
-  //   axios
-  //     .delete(`http://localhost:8005/api/stock/deleteAll`)
-  //     .then(response => {
-  //       setStockInfo([])
-  //     })
-  // }
 
   const columns = [
     {
@@ -97,18 +62,6 @@ const Parcels = () => {
       key: 'sender',
       render: (text, row) => <ParcelSettings parcelId={row._id} status={row.status} confirmParcelArrival={confirmParcelArrival} />,
     },
-    // {
-    //   title: 'Dostępna ilość',
-    //   key: 'availableQuantity',
-    //   dataIndex: 'availableQuantity',
-    //   render: text => <a>{text}</a>,
-    // },
-    // {
-    //   title: 'Dodaj ilość',
-    //   key: 'addQuantityInput',
-    //   dataIndex: 'productId',
-    //   render: productId => <InputQuantity productId={productId} updateStock={updateStock} />,
-    // }
   ]
 
   const subColumns = [

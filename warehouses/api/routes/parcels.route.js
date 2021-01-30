@@ -7,6 +7,6 @@ module.exports = (app) => {
   router.post('/confirmArrival', parcelsController.confirmArrival)
   router.get('/deleteAllParcels', parcelsController.deleteAllParcels)
 
-  app.use('/api/parcels', router)
+  app.use('/parcels', router)
 
 }
