@@ -20,7 +20,7 @@ services:
     #  - "db-service-wh1:db-service"
     #  - "api-service-wh1:api-service"
 
-  api-service-wh1:
+  api-service-wh:
     build: './api'
     volumes: 
       - ./api:/usr/src/app

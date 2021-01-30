@@ -1,0 +1,41 @@
+services:
+  pgdb:
+    image: postgres:12.5
+    volumes:
+      - ./productsdata:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "postgrespassword"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "products"
+    networks:
+      - products
+
+  productsapp:
+    build: './app'
+    depends_on:
+      - pgdb
+    volumes: 
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8000:3000"
+    restart: always
+    networks:
+      wspolna:
+        ipv4_address: '10.1.0.100'
+      products:
+        
+volumes:
+  productsdata: {}
+
+networks:
+  products:    
+  wspolna:
+    name: wspolna
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
