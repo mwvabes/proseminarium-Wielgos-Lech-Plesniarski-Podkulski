@@ -1,0 +1,61 @@
+doctype html
+html(lang='en')
+    include ../common/head.pug
+    +head("Produkty")
+    body
+        header
+            include ../common/navbar.pug
+            +navbar()
+        .everything
+            .row.align-items-center
+                .col-md-12.order-md-1.text-center.text-md-left.pr-md-5
+                    h1.text-center Produkty
+                    table.table
+                        thead
+                            tr
+                                th(scope="col")
+                                    h2 Nazwa
+                                th(scope="col")
+                                    h2 Opis
+                                th(scope="col")
+                                    h2 Cena
+                                th(scope="col")
+                                    h2 Wymiary
+                                    h5 (dł. x szer. x wys)
+                                th(scope="col")
+                                    h2 EAN
+                                th(scope="col")
+                                    h2 Kategoria
+                                th(scope="col")
+                                    h2 Akcje
+                                th(scope="col")
+                                    a(href="/produkt").check3.btn.btn-primary.m-3 Dodaj
+                            tr
+                        tbody
+                            for produkt in produkties
+                                tr(id=produkt.id)
+                                    td
+                                        h5
+                                            span #{produkt.nazwa}
+                                    td
+                                        h5
+                                            span #{produkt.opis}
+                                    td
+                                        h5
+                                            span #{produkt.cena} zł
+                                    td
+                                        h5
+                                            span #{produkt.wymiary} (mm)
+                                    td
+                                        h5
+                                            span #{produkt.ean}
+                                    td
+                                        h5
+                                            span #{produkt.kategoria}
+                                    td
+                                        a(href="/produkt/"+produkt.id).check2.btn.btn-primary Wiecej
+                                    td
+                                        button(onclick=`usunProdukt('${produkt.id}')`).btn.btn-primary Usun
+        include ../common/footer.pug
+        +footer()
+        script(src='/javascripts/produkty.js')

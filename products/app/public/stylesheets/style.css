@@ -1,0 +1,25 @@
+body {
+  padding: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.check3{
+  height: 35px;
+}
+.check{
+  width: 120px;
+  height: 50px;
+
+}
+.check2{
+  width: 75px;
+  height: 39px;
+
+}
+.everything{
+  align-items: center;
+ padding: 10px;
+}

@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+    include ../common/head.pug
+    +head("Dodaj Promocje")
+    body
+        header
+            include ../common/navbar.pug
+            +navbar()
+        .container
+            .row.align-items-center
+                .col-md-6.order-md-1.text-center.text-md-left.pr-md-5
+                    h1 Dodaj Produkt
+                    form(action="/promocja", method="POST")
+                        .input-group.mb-3
+                            input(name="nazwa_promocji", type="text", placeholder="Podaj nazwę promocji: ").form-control
+                        .input-group.mb-3
+                            input(name="wartosc_promocji", type="text", placeholder="Podaj wartość promocji: np(123.02)").form-control
+                        .input-group.mb-3
+                            input(name="min_ilosc_produktu_w_koszyku", type="text", placeholder="Podaj minimalna ilość produktów w koszyki: ").form-control
+                        .input-group.mb-3
+                            button(type="submit").btn.btn-primary Potwierdz
+
+                    a(href="/promocje").check3.btn.btn-primary Powrót
+        include ../common/footer.pug
+        +footer()

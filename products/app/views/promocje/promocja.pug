@@ -1,0 +1,48 @@
+doctype html
+html(lang='en')
+    include ../common/head.pug
+    +head("Promocja")
+    body
+        header
+            include ../common/navbar.pug
+            +navbar()
+        .everything
+            .row.align-items-center
+                .col-md-12.order-md-1.text-center.text-md-left.pr-md-5
+                    span.text-center
+                        h1 #{promocja.nazwa_promocji}
+            .row.align-items-center
+                .col-md-12.order-md-1.text-center.text-md-left.pr-md-5
+                    table.table
+                        thead
+                            tr
+                                th(scope="col")
+                                    h2 Nazwa Promocji
+                                th(scope="col")
+                                    h2 Wartość Promocji
+                                th(scope="col")
+                                    h2 Minimalna Ilość produktu w koszyku
+                                th(scope="col")
+                                    h2 Akcje
+                                th(scope="col")
+                                    a(href="/promocje").check3.btn.btn-primary Powrót
+                            tr
+                        tbody
+                            tr(id=promocja.id)
+                                td
+                                    h5
+                                        span #{promocja.nazwa_promocji}
+                                td
+                                    h5
+                                        span #{promocja.wartosc_promocji} zł
+                                td
+                                    h5
+                                        span #{promocja.min_ilosc_produktu_w_koszyku}
+                                td
+                                    a(href="/promocja/" + promocja.id+"/edit").check2.btn.btn-primary Edutuj
+                                td
+                                    form(action="/promocja/" + promocja.id + "/delete", method="POST")
+                                        button(type="submit").btn.btn-primary Usun
+        include ../common/footer.pug
+        +footer()
+        script(src='/javascripts/promocje.js')
