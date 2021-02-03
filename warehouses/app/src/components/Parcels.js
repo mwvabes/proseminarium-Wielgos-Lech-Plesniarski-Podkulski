@@ -31,7 +31,7 @@ const Parcels = () => {
 
   const fetchParcels = () => {
     axios
-      .get(`http://localhost:90/api/parcels`)
+      .get(`/api/parcels`)
       .then(response => {
         console.log(response)
         setParcelsInfo(response.data.parcel)
@@ -43,7 +43,7 @@ const Parcels = () => {
 
   const confirmParcelArrival = (parcelId) => {
     axios
-      .post(`http://localhost:90/api/parcels/confirmArrival?parcelId=${parcelId}`)
+      .post(`/api/parcels/confirmArrival?parcelId=${parcelId}`)
       .then(response => {
         fetchParcels()
       })
