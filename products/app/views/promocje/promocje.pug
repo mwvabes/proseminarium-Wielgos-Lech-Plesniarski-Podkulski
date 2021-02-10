@@ -37,9 +37,9 @@ html(lang='en')
                                         h5
                                             span #{promocja.min_ilosc_produktu_w_koszyku}
                                     td
-                                        a(href="/promocja/"+promocja.id).check2.btn.btn-primary Wiecej
+                                        a(href="/promocja/"+promocja.id).check2.btn.btn-primary Więcej
                                     td
-                                        button(onclick=`usunPromocje('${promocja.id}')`).btn.btn-primary Usun
+                                        button(onclick=`usunPromocje('${promocja.id}')`).btn.btn-primary Usuń
         include ../common/footer.pug
         +footer()
         script(src='/javascripts/promocje.js')

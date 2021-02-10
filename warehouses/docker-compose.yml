@@ -2,47 +2,53 @@ version: "3"
 
 services:
   app-service-wh1:
-    build: "./app"
+    build:
+      context: "./app"
+      dockerfile: Dockerfile-wh1
     volumes: 
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
-    ports: 
-      - "3006:3000"
+    # ports: 
+    #   - "3006:3000"
     networks:
       wh1-network:
         aliases:
           - appservice
+      wspolna:
     env_file:
       - ./env/wh1.env
     #links:
     #  - "db-service-wh1:db-service"
     #  - "api-service-wh1:api-service"
 
-  api-service-wh:
+  api-service-wh1:
     build: './api'
     volumes: 
       - ./api:/usr/src/app
       - /usr/src/api/node_modules
-    ports: 
-      - "8006:90"
+    # ports: 
+    #   - "8006:90"
     networks:
       wh1-network:
         aliases:
           - apiservice
+      wspolna:
+        ipv4_address: '10.1.0.210'
     depends_on:
       - db-service-wh1
-    env_file:
-      - ./env/wh1.env
+    environment:
+      env_file: ./env/wh1.env
+      NODE_ENV: development
     #links:
      # - "db-service-wh1:db-service"
     #  - "app-service-wh1:app-service"
 
   db-service-wh1:
     image: mongo:3.6.19-xenial
-    ports: 
-      - "2726:27017"
+    # ports: 
+    #   - "2726:27017"
     networks:
       wh1-network:
         aliases:
@@ -57,12 +63,22 @@ services:
     image: "reverseproxy:1.0.0"
     networks:
       - wh1-network
+      - wspolna
     ports:
       - "90:90"
+    depends_on:
+      - app-service-wh1
+      - api-service-wh1
+      - db-service-wh1
 
 networks:
   wh1-network:
-  #  driver: bridge
+  wspolna:
+    name: wspolna
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
 volumes:
   db-data-wh1:
     driver: local

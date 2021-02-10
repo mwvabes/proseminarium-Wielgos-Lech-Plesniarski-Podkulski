@@ -10,7 +10,7 @@ html(lang='en')
             .row.align-items-center
                 .col-md-6.order-md-1.text-center.text-md-left.pr-md-5
                     h1 Dodaj Produkt
-                    form(action="/produkt", method="POST")
+                    form(action="http://localhost:90/products/api/produkty", method="POST")
                         .input-group.mb-3
                             input(name="nazwa", type="text", placeholder="Podaj nazwę produktu: ").form-control
                         .input-group.mb-3
@@ -24,8 +24,8 @@ html(lang='en')
                         .input-group.mb-3
                             input(name="kategoria", type="text", placeholder="Podaj kategorię produktu: ").form-control
                         .input-group.mb-3
-                            button(type="submit").btn.btn-primary Potwierdz
+                            button(type="submit").btn.btn-primary Potwierdź
 
-                    a(href="/produkty").check3.btn.btn-primary Powrót
+                    a(href="./produkty").check3.btn.btn-primary Powrót
         include ../common/footer.pug
         +footer()

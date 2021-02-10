@@ -10,6 +10,8 @@ import Header from './components/Header'
 import Stock from './components/Stock'
 import Parcels from './components/Parcels'
 
+console.log("env", process.env)
+
 const App = () => {
 
   return (

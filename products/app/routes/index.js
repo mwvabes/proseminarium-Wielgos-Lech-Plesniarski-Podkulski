@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Proseminarium' });
 });
 //API
+
+router.get('/api', function(req, res, next) {
+  res.send("Mikroserwis produktów");
+});
+
 router.get('/api/produkty', produktyKontroller.list);
 router.get('/api/produkty/:id', produktyKontroller.getById);
 router.post('/api/produkty', produktyKontroller.add);

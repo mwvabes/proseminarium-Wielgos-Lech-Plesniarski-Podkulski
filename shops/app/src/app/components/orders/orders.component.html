@@ -1,0 +1,46 @@
+<div class="title">
+  <h1 translate="orderHistory"></h1>
+</div>
+
+<div class="row" *ngIf="data">
+  <div class="col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th translate="orderNumber"></th>
+          <th translate="entity"></th>
+          <th translate="contractor"></th>
+          <th translate="priority"></th>
+          <th translate="totalNetto"></th>
+          <th translate="totalBrutto"></th>
+          <th translate="status"></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data.rows; let i = index">
+          <td>{{ item.id }}</td>
+          <td>{{ item.podmiot.nazwa }}</td>
+          <td>{{ item.kontrahent.nazwa }}</td>
+          <td>{{ "priorityEnum." + item.priorytet | translate }}</td>
+          <td>{{ "statusEnum." + getStatus(i) | translate }}</td>
+          <td>{{ getTotalNetto(i).toFixed(2) | currency: "PLN" }}</td>
+          <td>{{ (getTotalNetto(i) * 1.23).toFixed(2) | currency: "PLN" }}</td>
+          <td>
+            <a [routerLink]="'details/' + item.id" translate="showDetails"></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-md-12" *ngIf="data">
+  <ngb-pagination
+    (pageChange)="changePage($event)"
+    [page]="pagination.page"
+    [pageSize]="pagination.size"
+    [collectionSize]="data.count"
+  >
+  </ngb-pagination>
+</div>

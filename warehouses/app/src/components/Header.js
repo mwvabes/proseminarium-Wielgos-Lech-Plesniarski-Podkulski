@@ -12,13 +12,12 @@ const Header = () => {
 
   const [whName, setWhName] = useState(null)
   
-  const getWhName = () => {
-    console.log("Resolving WH name")
+  const getWhName = () => {    
     axios
-    .get(`http://localhost:90/api`)
-    .then(response => {
-      console.log("RESOLVED", response)
+    .get(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api`)
+    .then(response => {      
       setWhName(response.data.name)
+      localStorage.setItem('whKey', response.data.whKey);
     })
   }
 

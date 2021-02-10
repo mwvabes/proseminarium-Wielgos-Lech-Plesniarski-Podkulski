@@ -1,0 +1,17 @@
+<div class="row">
+  <div
+    class="col-md-3"
+    *ngFor="let item of _data | slice: (page - 1) * pageSize:page * pageSize"
+  >
+    <app-products-list-item [data]="item"></app-products-list-item>
+  </div>
+  <div class="col-md-12">
+    <ngb-pagination
+      (pageChange)="changePage($event)"
+      [page]="page"
+      [pageSize]="pageSize"
+      [collectionSize]="_data.length"
+    >
+    </ngb-pagination>
+  </div>
+</div>

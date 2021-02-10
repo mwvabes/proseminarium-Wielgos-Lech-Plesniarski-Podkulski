@@ -39,10 +39,10 @@ html(lang='en')
                                     h5
                                         span #{promocja.min_ilosc_produktu_w_koszyku}
                                 td
-                                    a(href="/promocja/" + promocja.id+"/edit").check2.btn.btn-primary Edutuj
+                                    a(href="/promocja/" + promocja.id+"/edit").check2.btn.btn-primary Edytuj
                                 td
                                     form(action="/promocja/" + promocja.id + "/delete", method="POST")
-                                        button(type="submit").btn.btn-primary Usun
+                                        button(type="submit").btn.btn-primary Usuń
         include ../common/footer.pug
         +footer()
         script(src='/javascripts/promocje.js')

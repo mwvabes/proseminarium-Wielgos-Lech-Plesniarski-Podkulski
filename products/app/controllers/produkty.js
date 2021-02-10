@@ -7,7 +7,7 @@ module.exports = {
         return Produkty
             .findAll({
             })
-            .then((produkties) => res.status(200).send(produkties))
+            .then((produkties) => res.status(200).send({products: produkties}))
             .catch((error) => { res.status(400).send(error); });
     },
     getById(req, res) {
@@ -32,8 +32,9 @@ module.exports = {
             "nazwa": "required|string",
             "opis": "required|string",
             "cena": "required|regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
-            "wymiary": "required|regex:/^([0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2})$/",
-            "ean": "required|size:8|integer",
+            //"wymiary": "required|regex:/^([0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2})$/",
+            "wymiary": "required|string",
+            "ean": "required|integer|regex:/^[0-9]{8}$/",
             "kategoria": "required|string",
         }
         validator(req.body,validationRule,{},(err,status)=>{
@@ -174,7 +175,7 @@ module.exports = {
                         ean: req.body.ean,
                         kategoria: req.body.kategoria,
                     })
-                    .then((produkties) => res.redirect('/produkty'))
+                    .then((produkties) => res.redirect('./produkty'))
                     .catch((error) => res.status(400).send(error));
             }
         });

@@ -29,7 +29,7 @@ html(lang='en')
                                 th(scope="col")
                                     h2 Akcje
                                 th(scope="col")
-                                    a(href="/produkt").check3.btn.btn-primary.m-3 Dodaj
+                                    a(href="./produkt").check3.btn.btn-primary.m-3 Dodaj
                             tr
                         tbody
                             for produkt in produkties
@@ -53,9 +53,9 @@ html(lang='en')
                                         h5
                                             span #{produkt.kategoria}
                                     td
-                                        a(href="/produkt/"+produkt.id).check2.btn.btn-primary Wiecej
+                                        a(href="./produkt/"+produkt.id).check2.btn.btn-primary Więcej
                                     td
-                                        button(onclick=`usunProdukt('${produkt.id}')`).btn.btn-primary Usun
+                                        button(onclick=`usunProdukt('${produkt.id}')`).btn.btn-primary Usuń
         include ../common/footer.pug
         +footer()
         script(src='/javascripts/produkty.js')

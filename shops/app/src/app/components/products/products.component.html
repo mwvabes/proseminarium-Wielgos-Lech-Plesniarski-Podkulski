@@ -1,0 +1,15 @@
+<div class="title">
+  <h1 [translate]="'products'"></h1>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <app-products-filters
+      (sortEvent)="changeSort($event)"
+      (filterEvent)="changeFilter($event)"
+    ></app-products-filters>
+  </div>
+
+  <div class="col-md-10">
+    <app-products-list [data]="products"></app-products-list>
+  </div>
+</div>

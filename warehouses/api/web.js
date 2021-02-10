@@ -15,13 +15,14 @@ require("./routes/parcels.route")(app)
 
 app.get('/', (request, result) => {
   result.json({
-    "name": process.env.WHNAME
+    "name": process.env.WHNAME,
+    "whKey": process.env.WHKEY
   })
 })
 
 
 
-app.listen(process.env.PORT || 80, err => {
+app.listen(process.env.PORT || 8005, err => {
   if (err) throw err;
   console.log("Server is up!")
 })

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Button, Divider, Table, Form, Input, InputNumber, Space } from 'antd'
+import { Button, Divider, Table, Form, Input, InputNumber, Select, Space } from 'antd'
 
-const InputQuantity = ({ productId, updateStock }) => {
+const { Option } = Select
+
+const InputQuantity = ({ productId, updateStock, products }) => {
 
   const defaultValue = 1
 
@@ -25,15 +27,17 @@ const InputQuantity = ({ productId, updateStock }) => {
 const Stock = () => {
 
   const [stockInfo, setStockInfo] = useState([])
+  const [whKey, setWhKey] = useState(localStorage.getItem('whKey'))
 
-  const [formProductId, setFormProductId] = useState(null)
+  const [fetchedProducts, setFetchedProducts] = useState([])
+
+  const [formProduct, setFormProduct] = useState(null)
   const [formAvailableQuantity, setFormAvailableQuantity] = useState(null)
 
   const fetchStock = () => {
     axios
-      .get(`http://localhost:90/api/stock`)
+      .get(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock`)
       .then(response => {
-        console.log(response)
         setStockInfo(response.data.stock)
       })
       .catch(e => {
@@ -41,10 +45,29 @@ const Stock = () => {
       })
   }
 
-  useEffect(fetchStock, [])
+  const fetchProducts = () => {
+    axios
+      .get(`http://localhost:90/products/api/produkty`)
+      .then(response => {
+        setFetchedProducts(response.data.products)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
 
-  const handleProductIdChange = (event) => {
-    setFormProductId(event.target.value)
+  const fetchWhKey = () => {
+    setWhKey(localStorage.getItem('whKey'))
+  }
+
+  useEffect(fetchWhKey, [])
+
+  useEffect(fetchStock, [])
+  useEffect(fetchProducts, [])
+  
+
+  const handleProductChange = (event) => {
+    setFormProduct(fetchedProducts[event-1])
   }
 
   const handleAvailableQuantityChange = (event) => {
@@ -53,7 +76,7 @@ const Stock = () => {
 
   const updateStock = (productId, availableQuantity) => {
     axios
-      .post(`http://localhost:90/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
+      .post(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -61,7 +84,7 @@ const Stock = () => {
 
   const setStock = () => {
     axios
-      .post(`http://localhost:90/api/stock/setStock?productId=${formProductId}&availableQuantity=${formAvailableQuantity}`)
+      .post(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/setStock?productId=${formProduct.id}&availableQuantity=${formAvailableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -69,24 +92,35 @@ const Stock = () => {
 
   const removeAllStock = () => {
     axios
-      .delete(`http://localhost:90/api/stock/deleteAll`)
+      .delete(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/deleteAll`)
       .then(response => {
         setStockInfo([])
       })
   }
 
+  const retrieveProductName = (id) => {
+    const p = fetchedProducts.find(p => {return p.id == id})
+    if (p) {
+      return p.nazwa
+    } else {
+      return ""
+    }
+
+  }
+
   const columns = [
     {
-      title: 'ID',
+      title: 'Produkt',
       dataIndex: 'productId',
       key: 'productId',
       render: text => <a>{text}</a>,
+      render: text => <p>{retrieveProductName(text)}</p>,
     },
     {
       title: 'Dostępna ilość',
       key: 'availableQuantity',
       dataIndex: 'availableQuantity',
-      render: text => <a>{text}</a>,
+      render: text => <p>{text}</p>,
     },
     {
       title: 'Dodaj ilość',
@@ -95,6 +129,8 @@ const Stock = () => {
       render: productId => <InputQuantity productId={productId} updateStock={updateStock} />,
     }
   ];
+
+  const optionsProduct = fetchedProducts.map(p => <Option value={p.id} >{`${p.ean} ${p.nazwa}`}</Option> )
 
   return (
     <>
@@ -105,8 +141,27 @@ const Stock = () => {
       // initialValues={{ layout: formLayout }}
       // onValuesChange={onFormLayoutChange}
       >
-        <Form.Item label="ID produktu">
-          <Input placeholder="1" onChange={handleProductIdChange} />
+        <Form.Item label="Produkt: ">
+          {/* <Input placeholder="1" onChange={handleProductIdChange} /> */}
+        
+        <Select
+          showSearch
+          style={{ width: 200 }}
+          placeholder="Wybór produktu"
+          optionFilterProp="children"
+          onChange={(e) => handleProductChange(e)}
+          // onFocus={onFocus}
+          // onBlur={onBlur}
+          // onSearch={onSearch}
+          // filterOption={(input, option) =>
+          //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          // }
+        >
+          {
+            optionsProduct
+          }
+        </Select>
+
         </Form.Item>
         <Form.Item label="Ilość (szt.)">
           <Input placeholder="4" onChange={handleAvailableQuantityChange} />

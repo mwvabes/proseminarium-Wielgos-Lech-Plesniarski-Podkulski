@@ -17,9 +17,11 @@
 FROM node:13.12.0-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
+ENV REACT_APP_WHKEY=wh1
 COPY . /app
 RUN npm cache clean --force
-RUN npm ci --loglevel verbose
+# RUN npm ci --loglevel verbose
+RUN npm ci
 RUN npm run build
 
 # # stage 2
@@ -27,3 +29,4 @@ FROM nginx:1.16.0-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 90
 CMD ["nginx", "-g", "daemon off;"]
+# CMD [ "npm", "start" ]

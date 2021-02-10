@@ -1,11 +1,9 @@
 services:
   pgdb:
-    image: postgres:12.5
+    image: postgres
     volumes:
       - ./productsdata:/var/lib/postgresql/data
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: "postgrespassword"
       POSTGRES_USER: "postgres"
@@ -23,10 +21,14 @@ services:
     ports:
       - "8000:3000"
     restart: always
+    depends_on:
+      - pgdb
     networks:
-      wspolna:
-        ipv4_address: '10.1.0.100'
       products:
+      wspolna:
+        ipv4_address: '10.1.0.204'
+        aliases:
+          - productsapi
         
 volumes:
   productsdata: {}

@@ -24,7 +24,8 @@ const ParcelSettings = ({ parcelId, status, confirmParcelArrival }) => {
 
 const Parcels = () => {
 
-  const [parcelsInfo, setParcelsInfo] = useState([])
+  const [parcelsInfo, setParcelsInfo] = useState(localStorage.getItem('whKey'))
+  const [whKey, setWhKey] = useState(localStorage.getItem('whKey'))
 
   // const [formProductId, setFormProductId] = useState(null)
   // const [formAvailableQuantity, setFormAvailableQuantity] = useState(null)
@@ -33,17 +34,18 @@ const Parcels = () => {
     axios
       .get(`/api/parcels`)
       .then(response => {
-        console.log(response)
+        //console.log(response)
         setParcelsInfo(response.data.parcel)
       })
       .catch(e => console.log(e))
   }
 
   useEffect(fetchParcels, [])
+  
 
   const confirmParcelArrival = (parcelId) => {
     axios
-      .post(`/api/parcels/confirmArrival?parcelId=${parcelId}`)
+      .post(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/parcels/confirmArrival?parcelId=${parcelId}`, { params: {whKey: whKey}})
       .then(response => {
         fetchParcels()
       })

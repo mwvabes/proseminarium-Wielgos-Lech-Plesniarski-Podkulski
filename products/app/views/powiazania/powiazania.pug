@@ -29,7 +29,7 @@ html(lang='en')
                                 th(scope="col")
                                     h2 Akcje
                                 th(scope="col")
-                                    a(href="/powiazanie").check3.btn.btn-primary.m-3 Dodaj
+                                    a(href="./powiazanie").check3.btn.btn-primary.m-3 Dodaj
                             tr
                         tbody
                             for powiazanie in powiazanies
@@ -54,9 +54,9 @@ html(lang='en')
                                             h5
                                                 span #{powiazanie.id}
                                         td
-                                            a(href="/powiazanie/"+powiazanie.id).check2.btn.btn-primary Wiecej
+                                            a(href="/powiazanie/"+powiazanie.id).check2.btn.btn-primary Więcej
                                         td
-                                            button(onclick=`usunPowiazanie('${powiazanie.id}')`).btn.btn-primary Usun
+                                            button(onclick=`usunPowiazanie('${powiazanie.id}')`).btn.btn-primary Usuń
         include ../common/footer.pug
         +footer()
         script(src='/javascripts/powiazanie.js')

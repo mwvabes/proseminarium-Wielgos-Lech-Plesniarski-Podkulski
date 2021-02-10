@@ -32,7 +32,7 @@ html(lang='en')
                                 th(scope="col")
                                     h2 Akcje
                                 th(scope="col")
-                                    a(href="/produkty").check3.btn.btn-primary Powrót
+                                    a(href="./produkty").check3.btn.btn-primary Powrót
                             tr
                         tbody
                             tr(id=produkt.id)
@@ -55,10 +55,10 @@ html(lang='en')
                                     h5
                                         span #{produkt.kategoria}
                                 td
-                                    a(href="/produkt/" + produkt.id+"/edit").check2.btn.btn-primary Edutuj
+                                    a(href="./produkt/" + produkt.id+"/edit").check2.btn.btn-primary Edytuj
                                 td
-                                    form(action="/produkt/" + produkt.id + "/delete", method="POST")
-                                        button(type="submit").btn.btn-primary Usun
+                                    form(action="./produkt/" + produkt.id + "/delete", method="POST")
+                                        button(type="submit").btn.btn-primary Usuń
         include ../common/footer.pug
         +footer()
-        script(src='/javascripts/produkty.js')
+        script(src='./javascripts/produkty.js')
