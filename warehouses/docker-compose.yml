@@ -27,7 +27,7 @@ services:
     build: './api'
     volumes: 
       - ./api:/usr/src/app
-      - /usr/src/api/node_modules
+      - /usr/src/app/node_modules
     # ports: 
     #   - "8006:90"
     networks:
