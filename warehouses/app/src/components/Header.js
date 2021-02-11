@@ -14,7 +14,7 @@ const Header = () => {
   
   const getWhName = () => {    
     axios
-    .get(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api`)
+    .get(`http://localhost:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_WHKEY}/api`)
     .then(response => {      
       setWhName(response.data.name)
       localStorage.setItem('whKey', response.data.whKey);
@@ -31,12 +31,15 @@ const Header = () => {
         <Menu.Item key="wh_name">
           {whName}
         </Menu.Item>
-        <Menu.Item key="stock_link">
+        {/* <Menu.Item key="stock_link">
           <Link to="/">Stan</Link>
         </Menu.Item>
         <Menu.Item key="parcels_link">
-          <Link to="/parcels">Przesyłki</Link>
+          <Link to="./parcels">Przesyłki przychodzące</Link>
         </Menu.Item>
+        <Menu.Item key="myparcels_link">
+          <Link to="./myparcels">Przesyłki wychodzące</Link>
+        </Menu.Item> */}
       </Menu>
     </>
   )

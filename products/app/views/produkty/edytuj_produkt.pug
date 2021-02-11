@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
     include ../common/head.pug
-    +head("Dodaj Produkt")
+    +head("Edytuj Produkt")
     body
         header
             include ../common/navbar.pug
@@ -25,6 +25,6 @@ html(lang='en')
                             input(name="kategoria", type="text", placeholder="Podaj kategorię produktu: ",value=produkties.kategoria).form-control
                         .input-group.mb-3
                             button(type="submit").btn.btn-primary Potwierdz
-            a(href="/produkt/" + produkties.id ).check3.btn.btn-primary Powrót
+            a(href="./produkt/" + produkties.id ).check3.btn.btn-primary Powrót
         include ../common/footer.pug
         +footer()

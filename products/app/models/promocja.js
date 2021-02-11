@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Promocja.init({
     nazwa_promocji: DataTypes.STRING,
-    wartosc_promocji: DataTypes.INTEGER,
+    wartosc_promocji: DataTypes.FLOAT,
     min_ilosc_produktu_w_koszyku: DataTypes.INTEGER
   }, {
     sequelize,

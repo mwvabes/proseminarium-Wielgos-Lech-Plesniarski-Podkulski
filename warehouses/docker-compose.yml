@@ -24,7 +24,9 @@ services:
     #  - "api-service-wh1:api-service"
 
   api-service-wh1:
-    build: './api'
+    build: 
+      context: './api'
+      dockerfile: Dockerfile-wh1
     volumes: 
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
@@ -59,7 +61,7 @@ services:
       - ./env/wh1.env
 
   revproxy-wh1:
-    build: ./revproxy
+    build: ./revproxy1
     image: "reverseproxy:1.0.0"
     networks:
       - wh1-network
@@ -71,8 +73,81 @@ services:
       - api-service-wh1
       - db-service-wh1
 
+  app-service-wh2:
+    build:
+      context: "./app"
+      dockerfile: Dockerfile-wh2
+    volumes: 
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    # ports: 
+    #   - "3006:3000"
+    networks:
+      wh2-network:
+        aliases:
+          - appservice
+      wspolna:
+    env_file:
+      - ./env/wh2.env
+    #links:
+    #  - "db-service-wh1:db-service"
+    #  - "api-service-wh1:api-service"
+
+  api-service-wh2:
+    build: 
+      context: './api'
+      dockerfile: Dockerfile-wh2
+    volumes: 
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    # ports: 
+    #   - "8006:90"
+    networks:
+      wh2-network:
+        aliases:
+          - apiservice
+      wspolna:
+        ipv4_address: '10.1.0.211'
+    depends_on:
+      - db-service-wh2
+    environment:
+      env_file: ./env/wh2.env
+      NODE_ENV: development
+    #links:
+     # - "db-service-wh1:db-service"
+    #  - "app-service-wh1:app-service"
+
+  db-service-wh2:
+    image: mongo:3.6.19-xenial
+    # ports: 
+    #   - "2726:27017"
+    networks:
+      wh2-network:
+        aliases:
+          - dbservice
+    volumes:
+      - db-data-wh2:/data/db
+    env_file:
+      - ./env/wh2.env
+
+  revproxy-wh2:
+    build: ./revproxy2
+    image: "reverseproxy2:1.0.0"
+    networks:
+      - wh2-network
+      - wspolna
+    ports:
+      - "91:91"
+    depends_on:
+      - app-service-wh2
+      - api-service-wh2
+      - db-service-wh2
+
 networks:
   wh1-network:
+  wh2-network:
   wspolna:
     name: wspolna
     ipam:
@@ -82,6 +157,9 @@ networks:
 volumes:
   db-data-wh1:
     driver: local
+  db-data-wh2:
+    driver: local
+
 
 # You need to bind to different ports then centralize them using a loadbalancer that reverse proxies like HAproxy or nginx even
 # [nginx-container] ---> [svc1:8001,svc2:8002,svc3:8003]

@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+    include ../common/head.pug
+    +head("Dodaj Powiazanie")
+    body
+        header
+            include ../common/navbar.pug
+            +navbar()
+        .container
+            .row.align-items-center
+                .col-md-6.order-md-1.text-center.text-md-left.pr-md-5
+                    h1 Dodaj Powiazanie
+                    form(action="/powiazanie", method="POST")
+                        .input-group.mb-3
+                            select
+                                each promocja in promocjas
+                                    option(value=promocja.id) #{promocja.nazwa}
+                            input(name="nazwa", type="text", placeholder="Podaj nazwę produktu: ").form-control
+                        .input-group.mb-3
+                            input(name="opis", type="text", placeholder="Podaj opis produktu: ").form-control
+                        .input-group.mb-3
+                            button(type="submit").btn.btn-primary Potwierdz
+
+                    a(href="/produkty").check3.btn.btn-primary Powrót
+        include ../common/footer.pug
+        +footer()

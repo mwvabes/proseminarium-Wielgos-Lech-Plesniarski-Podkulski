@@ -9,6 +9,7 @@ import { Menu } from 'antd'
 import Header from './components/Header'
 import Stock from './components/Stock'
 import Parcels from './components/Parcels'
+import MyParcels from './components/MyParcels'
 
 console.log("env", process.env)
 
@@ -21,15 +22,20 @@ const App = () => {
           <Header />
 
           <hr />
-
-          <Switch>
+          <Stock />
+           {/* <Parcels /> */}
+          {/*<MyParcels /> */}
+          {/* <Switch>
             <Route exact path="/">
               <Stock />
             </Route>
             <Route path="/parcels">
               <Parcels />
             </Route>
-          </Switch>
+            <Route path="/myparcels">
+              <MyParcels />
+            </Route>
+          </Switch> */}
         </div>
       </Router>
     </main>

@@ -42,7 +42,7 @@ html(lang='en')
                                     a(href="/promocja/" + promocja.id+"/edit").check2.btn.btn-primary Edytuj
                                 td
                                     form(action="/promocja/" + promocja.id + "/delete", method="POST")
-                                        button(type="submit").btn.btn-primary Usuń
+                                        button(type="submit").btn.btn-primary Usun
         include ../common/footer.pug
         +footer()
-        script(src='/javascripts/promocje.js')
+        script(src='./javascripts/promocje.js')

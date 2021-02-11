@@ -9,9 +9,35 @@ exports.getParcels = (request, result) => {
 
   mongoose.connect(db.url, db.attr)
 
-  Parcel.find({}).sort({ updatedAt: "desc" }).then(parcel => {
+  Parcel.find({status: { $ne: "owner" }}).sort({ updatedAt: "desc" }).then(parcel => {
     result.json({
       parcel
+    })
+    mongoose.connection.close()
+  })
+
+}
+
+exports.getMyParcels = (request, result) => {
+
+  mongoose.connect(db.url, db.attr)
+
+  Parcel.find({status: "owner"}).sort({ updatedAt: "desc" }).then(parcel => {
+    result.json({
+      parcel
+    })
+    mongoose.connection.close()
+  })
+
+}
+
+exports.getParcelsByOrder = (request, result) => {
+
+  mongoose.connect(db.url, db.attr)
+
+  Parcel.find({ status: request.query.order }).sort({ updatedAt: "desc" }).then(parcel => {
+    result.json({
+      parcels
     })
     mongoose.connection.close()
   })
@@ -24,6 +50,7 @@ exports.addParcel = (request, result) => {
 
   const parcel = new Parcel({
     sender: request.body.sender,
+    order: request.body.order,
     status: "in_shipping",
     products: request.body.products,
   })
@@ -34,6 +61,28 @@ exports.addParcel = (request, result) => {
       r
     )
     mongoose.connection.close()
+  })
+
+}
+
+exports.addCommand = (request, result) => {
+
+  mongoose.connect(db.url, db.attr)
+
+  const parcel = new Parcel({
+    sender: request.body.sender,
+    order: request.body.order,
+    status: "owner",
+    products: request.body.products,
+  })
+
+  parcel.save().then(r => {
+    console.log('Parcel saved!', request.body)
+    axios.post(`http://localhost:91/wh2/api/parcels/addParcel`, { params: r}).then(a => {
+      result.json(
+        a
+      )
+    }).catch(e => { })
   })
 
 }

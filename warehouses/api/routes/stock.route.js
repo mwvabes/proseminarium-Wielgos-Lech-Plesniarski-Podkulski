@@ -6,6 +6,7 @@ module.exports = (app) => {
 
   router.post('/setStock', stockController.setStock)
   router.post('/updateStock', stockController.updateStock)
+  router.post('/make', stockController.make)
 
   router.get('/findOne', stockController.findStockByProductId)
 

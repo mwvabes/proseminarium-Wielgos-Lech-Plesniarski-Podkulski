@@ -30,13 +30,14 @@ const Stock = () => {
   const [whKey, setWhKey] = useState(localStorage.getItem('whKey'))
 
   const [fetchedProducts, setFetchedProducts] = useState([])
+  const [optionsProducts, setOptionsProducts] = useState([])
 
   const [formProduct, setFormProduct] = useState(null)
   const [formAvailableQuantity, setFormAvailableQuantity] = useState(null)
 
   const fetchStock = () => {
     axios
-      .get(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock`)
+      .get(`http://localhost:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_WHKEY}/api/stock`)
       .then(response => {
         setStockInfo(response.data.stock)
       })
@@ -47,14 +48,17 @@ const Stock = () => {
 
   const fetchProducts = () => {
     axios
-      .get(`http://localhost:90/products/api/produkty`)
+      .get(`http://localhost:${process.env.REACT_APP_PORT}/products/api/produkty`)
       .then(response => {
-        setFetchedProducts(response.data.products)
+        setFetchedProducts(response.data)
+        setOptionsProducts(response.data.map(p => <Option value={p.id} >{`${p.ean} ${p.nazwa}`}</Option> ))
       })
       .catch(e => {
         console.log(e)
       })
   }
+
+  useEffect(fetchProducts, [])
 
   const fetchWhKey = () => {
     setWhKey(localStorage.getItem('whKey'))
@@ -63,10 +67,11 @@ const Stock = () => {
   useEffect(fetchWhKey, [])
 
   useEffect(fetchStock, [])
-  useEffect(fetchProducts, [])
+  
   
 
   const handleProductChange = (event) => {
+    console.log("e", event)
     setFormProduct(fetchedProducts[event-1])
   }
 
@@ -76,7 +81,7 @@ const Stock = () => {
 
   const updateStock = (productId, availableQuantity) => {
     axios
-      .post(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
+      .post(`http://localhost:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_WHKEY}/api/stock/updateStock?productId=${productId}&availableQuantity=${availableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -84,7 +89,7 @@ const Stock = () => {
 
   const setStock = () => {
     axios
-      .post(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/setStock?productId=${formProduct.id}&availableQuantity=${formAvailableQuantity}`)
+      .post(`http://localhost:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_WHKEY}/api/stock/setStock?productId=${formProduct.id}&availableQuantity=${formAvailableQuantity}`)
       .then(response => {
         fetchStock()
       })
@@ -92,7 +97,7 @@ const Stock = () => {
 
   const removeAllStock = () => {
     axios
-      .delete(`http://localhost:90/${process.env.REACT_APP_WHKEY}/api/stock/deleteAll`)
+      .delete(`http://localhost:${process.env.REACT_APP_PORT}/${process.env.REACT_APP_WHKEY}/api/stock/deleteAll`)
       .then(response => {
         setStockInfo([])
       })
@@ -130,8 +135,6 @@ const Stock = () => {
     }
   ];
 
-  const optionsProduct = fetchedProducts.map(p => <Option value={p.id} >{`${p.ean} ${p.nazwa}`}</Option> )
-
   return (
     <>
 
@@ -158,7 +161,7 @@ const Stock = () => {
           // }
         >
           {
-            optionsProduct
+            optionsProducts.length > 0 ? optionsProducts : ""
           }
         </Select>
 

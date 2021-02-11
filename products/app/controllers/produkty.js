@@ -7,7 +7,7 @@ module.exports = {
         return Produkty
             .findAll({
             })
-            .then((produkties) => res.status(200).send({products: produkties}))
+            .then((produkties) => res.status(200).send(produkties))
             .catch((error) => { res.status(400).send(error); });
     },
     getById(req, res) {
@@ -32,9 +32,8 @@ module.exports = {
             "nazwa": "required|string",
             "opis": "required|string",
             "cena": "required|regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
-            //"wymiary": "required|regex:/^([0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2})$/",
-            "wymiary": "required|string",
-            "ean": "required|integer|regex:/^[0-9]{8}$/",
+            "wymiary": "required|regex:/^([0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2}[x,X]{1}[0-9]{1,10}[.,]{1}[0-9]{1,2})$/",
+            "ean": "required|size:8|integer",
             "kategoria": "required|string",
         }
         validator(req.body,validationRule,{},(err,status)=>{
@@ -129,7 +128,8 @@ module.exports = {
         return Produkty
             .findAll({
             })
-            .then((produkties) => res.render('produkty/produkty',{produkties:produkties}))
+            //.then((produkties) => res.render('./produkty/produkty',{produkties:produkties}))
+            .then((produkties) => res.render('./produkty/produkty',{produkties:produkties}))
             .catch((error) => { res.status(400).send(error); });
     },
     getById2(req, res) {
@@ -142,7 +142,8 @@ module.exports = {
                         message: 'Produkt Not Found',
                     });
                 }
-                return res.render('produkty/produkt',
+                //return res.render('./produkty/produkt',
+                return res.render('./produkty/produkt',
                     { produkt : produkties });
             })
             .catch((error) => {
@@ -151,7 +152,8 @@ module.exports = {
             });
     },
     pre_add2(req, res, next) {
-        res.render('produkty/dodaj_produkt');
+        //res.render('./produkty/dodaj_produkt');
+        res.render('./produkty/dodaj_produkt');
     },
     add2(req, res) {
         const validationRule={
@@ -164,7 +166,8 @@ module.exports = {
         }
         validator(req.body,validationRule,{},(err,status)=>{
             if (!status) {
-                res.render('produkty/dodaj_produkt');
+                res.render('./produkty/dodaj_produkt');
+                //res.render('produkty/dodaj_produkt');
             } else {
                 return Produkty
                     .create({
@@ -175,6 +178,7 @@ module.exports = {
                         ean: req.body.ean,
                         kategoria: req.body.kategoria,
                     })
+                    //.then((produkties) => res.redirect('./produkty'))
                     .then((produkties) => res.redirect('./produkty'))
                     .catch((error) => res.status(400).send(error));
             }
@@ -194,7 +198,8 @@ module.exports = {
                     });
 
                 }
-                res.render('produkty/edytuj_produkt', { produkties : produkties });
+               //res.render('./produkty/edytuj_produkt', { produkties : produkties });
+                res.render('./produkty/edytuj_produkt', { produkties : produkties });
             })
             .catch((error) => {
                 console.log(error);
@@ -212,7 +217,8 @@ module.exports = {
         }
         validator(req.body,validationRule,{},(err,status)=>{
             if (!status) {
-                res.redirect('/produkt/' + req.params.id+"/edit");
+               // res.redirect('./produkt/' + req.params.id);
+                res.redirect('./produkt/' + req.params.id);
             } else {
         return Produkty
             .findByPk(req.params.id, {
@@ -232,10 +238,13 @@ module.exports = {
                         ean: req.body.ean || produkties.ean,
                         kategoria: req.body.kategoria || produkties.kategoria,
                     })
-                    .then(() =>  res.redirect('/produkt/' + req.params.id))
-                    .catch((error) => res.redirect('/produkt/' + req.params.id));
+                    //.then(() =>  res.redirect('./produkt/' + req.params.id))
+                    .then(() =>  res.redirect('./produkt/' + req.params.id))
+                    //.catch((error) => res.redirect('./produkt/' + req.params.id));
+                    .catch((error) => res.redirect('./produkt/' + req.params.id));
             })
-            .catch((error) => res.redirect('/produkt/' + req.params.id));
+            .catch((error) => res.redirect('./produkt/' + req.params.id));
+            //.catch((error) => res.redirect('./produkt/' + req.params.id));
             }
         });
 
@@ -251,10 +260,13 @@ module.exports = {
                 }
                 return produkties
                     .destroy()
-                    .then(() =>  res.redirect('/produkty'))
-                    .catch((error) => res.redirect('/produkt/' + req.params.id));
+                    //.then(() =>  res.redirect('./produkty'))
+                    .then(() =>  res.redirect('./produkty'))
+                    //.catch((error) => res.redirect('./produkt/' + req.params.id));
+                    .catch((error) => res.redirect('./produkt/' + req.params.id));
             })
-            .catch((error) => res.redirect('/produkt/' + req.params.id));
+            //.catch((error) => res.redirect('./produkt/' + req.params.id));
+            .catch((error) => res.redirect('./produkt/' + req.params.id));
     },
     usun_produkt_json(req, res, next) {
         return Produkty.destroy({

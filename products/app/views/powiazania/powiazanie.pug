@@ -1,0 +1,78 @@
+doctype html
+html(lang='en')
+    include ../common/head.pug
+    +head("Powiazanie")
+    body
+        header
+            include ../common/navbar.pug
+            +navbar()
+        .everything
+            .row.align-items-center
+                .col-md-12.order-md-1.text-center.text-md-left.pr-md-5
+                    span.text-center
+                        h1 #{powiazanie_promocji.powiazania_produkt.nazwa} #{powiazanie_promocji.powiazania_promocja.nazwa_promocji}
+            .row.align-items-center
+                .col-md-12.order-md-1.text-center.text-md-left.pr-md-5
+                    table.table
+                        thead
+                            tr
+                                th(scope="col")
+                                    h4 Nazwa Produktu
+                                th(scope="col")
+                                    h4 Opis produktu
+                                th(scope="col")
+                                    h4 Cena produktu
+                                th(scope="col")
+                                    h4 Wymiary produktu
+                                    h5 (dł. x szer. x wys)
+                                th(scope="col")
+                                    h4 EAN produktu
+                                th(scope="col")
+                                    h4 Kategoria produktu
+                                th(scope="col")
+                                    h4 Nazwa Promocji
+                                th(scope="col")
+                                    h4 Wartość promocji
+                                th(scope="col")
+                                    h4 Min ilość w koszyku
+                                th(scope="col")
+                                    h4 Akcje
+                                th(scope="col")
+                                    a(href="/powiazania").check3.btn.btn-primary Powrót
+                            tr
+                        tbody
+                            tr(id=powiazanie_promocji.id)
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.nazwa}
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.opis}
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.cena} zł
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.wymiary} (mm)
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.ean}
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_produkt.kategoria}
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_promocja.nazwa_promocji}
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_promocja.wartosc_promocji} zł
+                                td
+                                    h5
+                                        span #{powiazanie_promocji.powiazania_promocja.min_ilosc_produktu_w_koszyku}
+                                td
+                                    a(href="/powiazanie/" + powiazanie_promocji.id+"/edit").check2.btn.btn-primary Edytuj
+                                td
+                                    form(action="/powiazanie/" + powiazanie_promocji.id + "/delete", method="POST")
+                                        button(type="submit").btn.btn-primary Usun
+        include ../common/footer.pug
+        +footer()

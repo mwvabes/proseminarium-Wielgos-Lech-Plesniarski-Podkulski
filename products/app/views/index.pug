@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
   include common/head.pug
-  +head("Strona glowna")
+  +head("Strona główna")
   body
     header
       include common/navbar.pug
@@ -13,7 +13,7 @@ html(lang='en')
           p.lead.mb-4.text-center Podgląd poszczególnych danych
       .row.d-flex.justify-content-center
         a(href="./produkty").check.btn.btn-primary.m-3 Produkty
-        //- a(href="./promocje").check.btn.btn-primary.m-3 Promocje
-        //- a(href="./powiazania").check.btn.btn-primary.m-3 Powiazania
+        //a(href="./promocje").check.btn.btn-primary.m-3 Promocje
+        //a(href="./powiazania").check.btn.btn-primary.m-3 Powiazania
   include common/footer.pug
   +footer()

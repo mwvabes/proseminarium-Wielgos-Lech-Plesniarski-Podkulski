@@ -30,7 +30,7 @@ module.exports = {
     add(req, res) {
         const validationRule={
             "nazwa_promocji": "required|string",
-            "wartosc_promocji": "required|integer",
+            "wartosc_promocji": "required:regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
             "min_ilosc_produktu_w_koszyku": "required|integer",
 
         }
@@ -59,7 +59,7 @@ module.exports = {
     update(req, res) {
         const validationRule={
             "nazwa_promocji": "required|string",
-            "wartosc_promocji": "required|integer",
+            "wartosc_promocji": "required:regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
             "min_ilosc_produktu_w_koszyku": "required|integer",
 
         }
@@ -147,7 +147,7 @@ module.exports = {
     add2(req, res) {
         const validationRule={
             "nazwa_promocji": "required|string",
-            "wartosc_promocji": "required|integer",
+            "wartosc_promocji": "required:regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
             "min_ilosc_produktu_w_koszyku": "required|integer",
 
         }
@@ -187,7 +187,7 @@ module.exports = {
     update2(req, res) {
         const validationRule={
             "nazwa_promocji": "required|string",
-            "wartosc_promocji": "required|integer",
+            "wartosc_promocji": "required:regex:/^[0-9]{1,10}[.,]{1}[0-9]{1,2}$/",
             "min_ilosc_produktu_w_koszyku": "required|integer",
 
         }

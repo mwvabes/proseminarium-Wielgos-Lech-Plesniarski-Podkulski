@@ -15,7 +15,7 @@ require("./routes/parcels.route")(app)
 
 app.get('/', (request, result) => {
   result.json({
-    "name": process.env.WHNAME,
+    "name": process.env.REACT_APP_WHNAME,
     "whKey": process.env.WHKEY
   })
 })

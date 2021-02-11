@@ -77,6 +77,23 @@ exports.updateStock = (request, result) => {
 
 }
 
+exports.make = (request, result) => {
+
+  mongoose.connect(db.url, db.attr)
+
+  request.body.products.map(p => {
+    Stock.findOne({ productId: p.id }).then(stock => {
+  
+      Stock.findOneAndUpdate({productId: p.id}, {availableQuantity: Number(stock.availableQuantity) - (Number(p.quantity))}, {upsert: true} ).then(r => {
+        result.json(
+          r
+        )
+      })
+  
+    })
+  })
+}
+
 exports.deleteAllStock = (request, result) => {
 
   mongoose.connect(db.url, { useNewUrlParser: true });

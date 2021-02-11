@@ -1,6 +1,6 @@
 function usunProdukt(id) {
     $.ajax({
-        url: '/produkty/' + id + '/delete-json',
+        url: './produkty/' + id + '/delete-json',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: JSON.stringify({id}),

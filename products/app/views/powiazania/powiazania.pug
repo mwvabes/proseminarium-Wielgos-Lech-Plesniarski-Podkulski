@@ -14,49 +14,47 @@ html(lang='en')
                         thead
                             tr
                                 th(scope="col")
-                                    h2 Nazwa
+                                    h2 Nazwa Produktu
                                 th(scope="col")
-                                    h2 Opis
+                                    h2 Nazwa Promocji
                                 th(scope="col")
-                                    h2 Cena
+                                    h2 Cena Produktu
                                 th(scope="col")
-                                    h2 Wymiary
-                                    h5 (dł. x szer. x wys)
+                                    h2 Ean Produktu
                                 th(scope="col")
-                                    h2 EAN
+                                    h2 Wartość promocji
                                 th(scope="col")
-                                    h2 Kategoria
+                                    h4 Minimalna ilość produktów by obowiązywała promocja
                                 th(scope="col")
                                     h2 Akcje
                                 th(scope="col")
-                                    a(href="./powiazanie").check3.btn.btn-primary.m-3 Dodaj
+                                    a(href="/powiazanie").check3.btn.btn-primary.m-3 Dodaj
                             tr
                         tbody
                             for powiazanie in powiazanies
-                                for powiazania_produkt in powiazania_produkties
                                     tr(id=powiazanie.id)
                                         td
                                             h5
-                                                span #{powiazania_produkt.id}
+                                                span #{powiazanie.powiazania_produkt.nazwa}
                                         td
                                             h5
-                                                span #{powiazanie.id}
+                                                span #{powiazanie.powiazania_promocja.nazwa_promocji}
                                         td
                                             h5
-                                                span #{powiazanie.id} zł
+                                                span #{powiazanie.powiazania_produkt.cena} zł
                                         td
                                             h5
-                                                span #{powiazanie.id} (mm)
+                                                span #{powiazanie.powiazania_produkt.ean}
                                         td
                                             h5
-                                                span #{powiazanie.id}
+                                                span #{powiazanie.powiazania_promocja.wartosc_promocji} zł
                                         td
                                             h5
-                                                span #{powiazanie.id}
+                                                span #{powiazanie.powiazania_promocja.min_ilosc_produktu_w_koszyku} szt
                                         td
-                                            a(href="/powiazanie/"+powiazanie.id).check2.btn.btn-primary Więcej
+                                            a(href="/powiazanie/"+powiazanie.id).check2.btn.btn-primary Wiecej
                                         td
-                                            button(onclick=`usunPowiazanie('${powiazanie.id}')`).btn.btn-primary Usuń
+                                            button(onclick=`usunPowiazanie('${powiazanie.id}')`).btn.btn-primary Usun
         include ../common/footer.pug
         +footer()
         script(src='/javascripts/powiazanie.js')

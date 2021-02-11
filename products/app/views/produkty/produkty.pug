@@ -53,9 +53,9 @@ html(lang='en')
                                         h5
                                             span #{produkt.kategoria}
                                     td
-                                        a(href="./produkt/"+produkt.id).check2.btn.btn-primary Więcej
+                                        a(href="./produkt/"+produkt.id).check2.btn.btn-primary Wiecej
                                     td
-                                        button(onclick=`usunProdukt('${produkt.id}')`).btn.btn-primary Usuń
+                                        button(onclick=`usunProdukt('${produkt.id}')`).btn.btn-primary Usun
         include ../common/footer.pug
         +footer()
-        script(src='/javascripts/produkty.js')
+        script(src='./javascripts/produkty.js')

@@ -22,7 +22,7 @@ html(lang='en')
                                 th(scope="col")
                                     h2 Akcje
                                 th(scope="col")
-                                    a(href="/promocja").check3.btn.btn-primary.m-3 Dodaj
+                                    a(href="./promocja").check3.btn.btn-primary.m-3 Dodaj
                             tr
                         tbody
                             for promocja in promocjaies
@@ -37,9 +37,9 @@ html(lang='en')
                                         h5
                                             span #{promocja.min_ilosc_produktu_w_koszyku}
                                     td
-                                        a(href="/promocja/"+promocja.id).check2.btn.btn-primary Więcej
+                                        a(href="./promocja/"+promocja.id).check2.btn.btn-primary Wiecej
                                     td
-                                        button(onclick=`usunPromocje('${promocja.id}')`).btn.btn-primary Usuń
+                                        button(onclick=`usunPromocje('${promocja.id}')`).btn.btn-primary Usun
         include ../common/footer.pug
         +footer()
-        script(src='/javascripts/promocje.js')
+        script(src='./javascripts/promocje.js')

@@ -3,6 +3,10 @@ FROM node:10
 
 WORKDIR /usr/src/app
 
+ENV REACT_APP_PORT=91
+ENV REACT_APP_WHKEY=wh2
+ENV REACT_APP_WHNAME="Magazyn 2 Poznań"
+
 COPY ./package.json ./
 
 RUN npm install -g nodemon

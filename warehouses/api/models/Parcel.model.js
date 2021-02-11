@@ -5,6 +5,7 @@ const parcel = mongoose.model(
   new mongoose.Schema({
     sender: String,
     status: String,
+    order: String,
     products: Array
   },
   { timestamps: true })
