@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  api-service:
+    build: "./api"
+    volumes:
+      - ./api:/usr/src/api
+      - /usr/src/api/node_modules
+    ports:
+      - "8005:8005"
+    networks:
+      auth-network:
+      wspolna:
+        ipv4_address: "10.1.0.212"
+    depends_on:
+      - db-service
+
+  db-service:
+    image: mongo:3.6.19-xenial
+    ports:
+      - "2720:27017"
+    networks:
+      - auth-network
+    volumes:
+      - db-data:/data/db
+
+networks:
+  auth-network:
+    driver: bridge
+  wspolna:
+    name: wspolna
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+volumes:
+  db-data:
+    driver: local

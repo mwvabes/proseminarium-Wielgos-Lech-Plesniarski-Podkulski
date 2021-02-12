@@ -3,90 +3,6 @@
     <h1>{{ "orderNumber" | translate }}: {{ orderId }}</h1>
   </div>
 
-  <h2>Kontrahent</h2>
-  <p><span>Nazwa: </span>{{ data.kontrahent.nazwa }}</p>
-  <p><span>Adres: </span>{{ data.kontrahent.adres }}</p>
-  <p><span>NIP: </span>{{ data.kontrahent.nip }}</p>
-
-  <h2>Podmiot</h2>
-  <p><span>Nazwa: </span>{{ data.podmiot.nazwa }}</p>
-  <p><span>Adres: </span>{{ data.podmiot.adres }}</p>
-  <p><span>NIP: </span>{{ data.podmiot.nip }}</p>
-
-  <ng-container *ngIf="getStatus() !== 'DONE' && getStatus() !== 'CANCELED'">
-    <h2>Nowy status</h2>
-    <ngb-alert
-      #newStatusError
-      *ngIf="errorMessage"
-      type="danger"
-      (closed)="errorMessage = ''"
-      >{{ errorMessage }}
-    </ngb-alert>
-    <form [formGroup]="statusForm">
-      <div class="form-group">
-        <label for="form-status-type" translate="chooseStatus"></label>
-        <select
-          class="form-control"
-          id="form-status-type"
-          formControlName="typ"
-          required
-        >
-          <option
-            value="WAITING_PRODUCTS"
-            translate="statusEnum.WAITING_PRODUCTS"
-          ></option>
-          <option
-            value="IN_REALIZATION"
-            translate="statusEnum.IN_REALIZATION"
-          ></option>
-          <option value="SHIPPED" translate="statusEnum.SHIPPED"></option>
-          <option value="DONE" translate="statusEnum.DONE"></option>
-          <option
-            value="OTHER_EVENT"
-            translate="statusEnum.OTHER_EVENT"
-          ></option>
-          <option value="CANCELED" translate="statusEnum.CANCELED"></option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="form-status-description" translate="description"></label>
-        <input
-          type="text"
-          class="form-control"
-          id="form-status-description"
-          formControlName="opis"
-        />
-      </div>
-      <button
-        class="btn btn-primary"
-        translate="create"
-        (click)="statusFormSend()"
-      ></button>
-    </form>
-  </ng-container>
-
-  <h2>Statusy</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Data</th>
-        <th scope="col">Typ</th>
-        <th scope="col">Opis</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of data.statusy; index as i">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>
-          {{ item.data_godzina | date: "dd/MM/yyyy, HH:mm:ss" }}
-        </td>
-        <td>{{ "statusEnum." + item.typ | translate }}</td>
-        <td>{{ item.opis }}</td>
-      </tr>
-    </tbody>
-  </table>
-
   <h2>Produkty</h2>
   <table class="table table-striped">
     <thead>
@@ -94,10 +10,8 @@
         <th scope="col">#</th>
         <th scope="col">Nazwa</th>
         <th scope="col">Ilość</th>
-        <th scope="col">Cena netto</th>
-        <th scope="col">Cena brutto</th>
-        <th scope="col">Suma netto</th>
-        <th scope="col">Suma brutto</th>
+        <th scope="col">Cena</th>
+        <th scope="col">Suma</th>
       </tr>
     </thead>
     <tbody>
@@ -108,15 +22,7 @@
         </td>
         <td>{{ item.ilosc }}</td>
         <td>{{ item.cena_netto | currency: "PLN" }}</td>
-        <td>
-          {{ (item.cena_netto * 1.23).toFixed(2) | currency: "PLN" }}
-        </td>
         <td>{{ item.cena_netto * item.ilosc | currency: "PLN" }}</td>
-        <td>
-          {{
-            (item.cena_netto * item.ilosc * 1.23).toFixed(2) | currency: "PLN"
-          }}
-        </td>
       </tr>
     </tbody>
     <p>

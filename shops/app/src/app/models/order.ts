@@ -47,26 +47,12 @@ export interface PozycjaZamowienia {
   procentowa_stawka_vat: number;
 }
 
-export interface NewStatusPayload {
-  typ: string;
-  opis: string;
-  zamowienieId: number;
-}
-
 export interface NewOrderPayload {
-  kontrahentId: number;
-  podmiotId: number;
-  priorytet: string;
+  // userId: number;
   pozycje_zamowienia: NewOrderPozycjaZamowienia[];
 }
 
 export interface NewOrderPozycjaZamowienia {
   produktId: number;
   ilosc: number;
-}
-
-export interface NewPodmiotPayload {
-  nazwa: string;
-  nip: string;
-  adres: string;
 }

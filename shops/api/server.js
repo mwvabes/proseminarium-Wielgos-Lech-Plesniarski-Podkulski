@@ -1,14 +1,22 @@
 ﻿const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081",
-};
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "fd34s@!@dfa453f3DF#$D&W",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -17,11 +25,7 @@ db.sequelize.sync({
   force: false,
 });
 
-require("./routes/podmiot.routes")(app);
-require("./routes/produkt.routes")(app);
-require("./routes/kontrahent.routes")(app);
 require("./routes/zamowienie.routes")(app);
-require("./routes/status.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 

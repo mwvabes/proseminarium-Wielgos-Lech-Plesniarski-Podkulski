@@ -11,13 +11,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cena_netto: {
+      cena: {
         type: Sequelize.FLOAT(10, 2),
-        allowNull: false,
-        min: 0,
-      },
-      procentowa_stawka_vat: {
-        type: Sequelize.FLOAT(5, 2),
         allowNull: false,
         min: 0,
       },

@@ -19,7 +19,7 @@ services:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - "8000:3000"
+      - "8123:3000"
     restart: always
     depends_on:
       - pgdb

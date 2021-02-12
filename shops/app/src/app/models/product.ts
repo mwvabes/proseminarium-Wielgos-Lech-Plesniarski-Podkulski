@@ -6,11 +6,13 @@ export interface BasketProduct {
 export interface Product {
   id: number;
   nazwa: string;
-  cena_netto: number;
-  procentowa_stawka_vat: number;
+  cena: number;
+  opis: string;
+  wymiary: string;
+  ean: string;
+  kategoria: string;
 }
 
 export interface ProductResponse {
-  count: number;
-  rows: Product[];
+  products: Product[];
 }

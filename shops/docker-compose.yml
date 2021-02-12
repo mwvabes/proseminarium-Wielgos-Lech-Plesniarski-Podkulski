@@ -18,8 +18,8 @@ services:
     volumes:
       - ./api:/usr/src/api
       - /usr/src/api/node_modules
-    # ports:
-    #   - "8080:8080"
+    ports:
+      - "8080:8080"
     networks:
       - sh1-network
       - wspolna
@@ -36,7 +36,7 @@ services:
     networks:
       sh1-network:
       wspolna:
-        ipv4_address: '10.1.0.200'
+        ipv4_address: "10.1.0.200"
 
 networks:
   sh1-network:
@@ -50,4 +50,3 @@ networks:
 volumes:
   db-data:
     driver: local
-

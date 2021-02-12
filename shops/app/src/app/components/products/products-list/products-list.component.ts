@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from 'src/app/models/product';
 @Component({
   selector: 'app-products-list',
@@ -14,7 +14,7 @@ export class ProductsListComponent {
 
   _data: Product[];
   page = 1;
-  pageSize = 12;
+  pageSize = 9;
 
   constructor() {}
 

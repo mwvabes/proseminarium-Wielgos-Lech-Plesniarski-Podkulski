@@ -1,19 +1,14 @@
 const db = require("../models");
 const Op = db.Sequelize.Op;
 
-const Podmioty = db.podmioty;
-const Konrahenci = db.kontrahenci;
 const Zamowienie = db.zamowienia;
 const PozycjeZamowienia = db.pozycje_zamowienia;
-const Statusy = db.statusy;
 
 exports.create = async (req, res) => {
   const zamowienie = {
-    podmiotId: req.body.podmiotId,
-    kontrahentId: req.body.kontrahentId,
-    priorytet: req.body.priorytet,
+    userId: req.body.userId,
     pozycje_zamowienia: req.body.pozycje_zamowienia,
-    statusy: [{ typ: "PLACED" }],
+    status: "Oczekujące",
   };
 
   Zamowienie.create(
@@ -22,9 +17,6 @@ exports.create = async (req, res) => {
     },
     {
       include: [
-        { model: Podmioty, as: "podmiot" },
-        { model: Statusy, as: "statusy" },
-        { model: Konrahenci, as: "kontrahent" },
         {
           model: PozycjeZamowienia,
           as: "pozycje_zamowienia",
@@ -46,47 +38,22 @@ exports.create = async (req, res) => {
 exports.findAll = (req, res) => {
   const page = req.query.page;
   const size = req.query.size;
-  const priorytet = req.query.priorytet;
-  const nip = req.query.nip;
+  const userId = req.query.userId;
 
-  const conditionPriorytet = priorytet
-    ? { priorytet: { [Op.like]: `%${priorytet}%` } }
-    : null;
-
-  const conditionKontrahentNip = nip
-    ? { nip: { [Op.like]: `%${nip}%` } }
-    : null;
-
-  const sort = req.query.sort;
-  const order = req.query.order;
+  const conditionUserId = userId ? { userId: { [Op.like]: `${nip}` } } : null;
 
   let conditionSort = ["id", "desc"];
-  if (
-    sort &&
-    order &&
-    ["id", "priorytet"].includes(sort.toLowerCase()) &&
-    ["asc", "desc"].includes(order.toLowerCase())
-  ) {
-    conditionSort = [sort, order];
-  }
 
   Zamowienie.findAndCountAll({
     offset: page ? +page * size : 0,
     limit: size ? +size : 10,
     include: [
-      { model: Podmioty, as: "podmiot" },
-      { model: Statusy, as: "statusy" },
-      {
-        model: Konrahenci,
-        as: "kontrahent",
-        where: { [Op.and]: [conditionKontrahentNip] },
-      },
       {
         model: PozycjeZamowienia,
         as: "pozycje_zamowienia",
       },
     ],
-    where: { [Op.and]: [conditionPriorytet] },
+    where: { [Op.and]: [conditionUserId] },
     order: [conditionSort],
     distinct: true,
   })
@@ -106,9 +73,6 @@ exports.findOne = (req, res) => {
 
   Zamowienie.findByPk(id, {
     include: [
-      { model: Podmioty, as: "podmiot" },
-      { model: Statusy, as: "statusy" },
-      { model: Konrahenci, as: "kontrahent" },
       {
         model: PozycjeZamowienia,
         as: "pozycje_zamowienia",
@@ -127,60 +91,24 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.findAllByNip = (req, res) => {
-  const page = req.query.page;
-  const size = req.query.size;
-  const nip = req.query.nip;
-
-  if (!nip) {
-    res.status(500).send({
-      message: `Parametr nip jest wymagany!`,
-    });
-  }
-
-  const conditionKontrahentNip = nip
-    ? { nip: { [Op.like]: `%${nip}%` } }
-    : null;
-
-  Zamowienie.findAndCountAll({
-    offset: page ? +page * size : 0,
-    limit: size ? +size : 10,
-    include: [
-      { model: Podmioty, as: "podmiot", attributes: ["nazwa", "nip", "adres"] },
-      {
-        model: Statusy,
-        as: "statusy",
-        attributes: ["typ", "data_godzina", "opis"],
-      },
-      {
-        model: Konrahenci,
-        as: "kontrahent",
-        where: { [Op.and]: [conditionKontrahentNip] },
-        attributes: ["nazwa", "nip", "adres"],
-      },
-      {
-        model: PozycjeZamowienia,
-        as: "pozycje_zamowienia",
-        attributes: [
-          "ilosc",
-          "nazwa",
-          "cena_netto",
-          "procentowa_stawka_vat",
-          "id_produktu",
-        ],
-      },
-    ],
-    attributes: ["id", "priorytet"],
-    order: [["id", "desc"]],
-    distinct: true,
+exports.update = (req, res) => {
+  Zamowienie.update(req.body, {
+    where: { id: req.body.id },
   })
-    .then((data) => {
-      res.send(data);
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: `Status został zaktualizowany pomyślnie.`,
+        });
+      } else {
+        res.send({
+          message: `Zamowienie o podanym id nie został znaleziony lub wysłane dane są nieprawidłowe!`,
+        });
+      }
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || `Wystąpił problem podczas pobierania listy podmiotów!`,
+        message: `Wystąpił problem podczas aktualizowania zamowienia z ID = ${id}!`,
       });
     });
 };

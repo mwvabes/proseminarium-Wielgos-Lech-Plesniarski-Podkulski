@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Order } from 'src/app/models/order';
@@ -58,29 +58,5 @@ export class OrdersDetailsComponent implements OnInit {
     );
     const status = this.data.statusy.find((status) => status.id === statusId);
     return status ? status.typ : '';
-  }
-
-  statusFormSend(): void {
-    const { typ, opis } = this.statusForm.value;
-    this.createStatus(typ, opis);
-    this.statusForm.reset();
-  }
-
-  createStatus(typ: string, opis: string): void {
-    this.ordersService
-      .createStatus({
-        zamowienieId: this.orderId,
-        typ,
-        opis,
-      })
-      .subscribe(
-        (res) => {
-          console.log(res);
-          this.getOrder();
-        },
-        (error) => {
-          this.errorMessage = error.error.message;
-        }
-      );
   }
 }

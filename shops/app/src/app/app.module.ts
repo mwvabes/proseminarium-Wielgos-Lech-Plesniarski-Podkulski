@@ -7,7 +7,6 @@ import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { ProductsListComponent } from './components/products/products-list/products-list.component';
-import { ProductsFiltersComponent } from './components/products/products-filters/products-filters.component';
 import { ProductsListItemComponent } from './components/products/products-list/products-list-item/products-list-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -30,7 +29,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     NavComponent,
     ProductsListComponent,
-    ProductsFiltersComponent,
     ProductsListItemComponent,
     BasketComponent,
     BasketTableComponent,

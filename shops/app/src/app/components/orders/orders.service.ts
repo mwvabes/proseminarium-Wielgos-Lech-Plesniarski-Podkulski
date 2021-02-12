@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { NewStatusPayload, Order, OrderResponse } from '../../models/order';
+import { Order, OrderResponse } from '../../models/order';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Pagination } from 'src/app/models/pagination';
@@ -33,9 +33,5 @@ export class OrdersService {
 
   getOrder(id: number): Observable<Order> {
     return this.httpClient.get<Order>(`${environment.apiUrl}/zamowienie/${id}`);
-  }
-
-  createStatus(payload: NewStatusPayload) {
-    return this.httpClient.post(`${environment.apiUrl}/status`, payload);
   }
 }

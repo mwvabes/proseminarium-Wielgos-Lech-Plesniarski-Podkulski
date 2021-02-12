@@ -1,13 +1,12 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { NewOrderPayload } from 'src/app/models/order';
 import {
-  Kontrahent,
-  NewOrderPayload,
-  NewPodmiotPayload,
-  Podmiot,
-} from 'src/app/models/order';
-import { BasketProduct, Product } from 'src/app/models/product';
+  BasketProduct,
+  Product,
+  ProductResponse,
+} from 'src/app/models/product';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,7 +21,6 @@ export class BasketService {
 
   total: number = 0;
   data: BasketProduct[] = [];
-  public kontrahent: Kontrahent;
   produkty: Product[];
 
   constructor(private http: HttpClient) {
@@ -31,22 +29,6 @@ export class BasketService {
 
   getAll() {
     return of(this.data);
-  }
-
-  getPodmiot(): Observable<Podmiot[]> {
-    return this.http.get<Podmiot[]>(`${environment.apiUrl}/podmiot`);
-  }
-
-  createPodmiot(payload: NewPodmiotPayload) {
-    return this.http.post(`${environment.apiUrl}/podmiot`, payload);
-  }
-
-  editPodmiot(id: number, payload: NewPodmiotPayload) {
-    return this.http.put(`${environment.apiUrl}/podmiot/`, { ...payload, id });
-  }
-
-  getKontrahent(): Observable<Kontrahent[]> {
-    return this.http.get<Kontrahent[]>(`${environment.apiUrl}/kontrahent`);
   }
 
   createOrder(payload: NewOrderPayload) {
@@ -65,11 +47,6 @@ export class BasketService {
     });
   }
 
-  selectKontrahent(kontrahent?: Kontrahent) {
-    this.kontrahent = kontrahent;
-    this.getProducts(kontrahent?.nip);
-  }
-
   add(product: BasketProduct) {
     const existingIndex = this.data.findIndex(
       (item) => item.produktId === product.produktId
@@ -83,12 +60,9 @@ export class BasketService {
   }
 
   calculateTotal() {
-    const value = this.getData().reduce(
-      (prev, { ilosc, cena_netto, procentowa_stawka_vat }) => {
-        return prev + ilosc * (cena_netto * (1 + procentowa_stawka_vat / 100));
-      },
-      0
-    );
+    const value = this.getData().reduce((prev, { ilosc, cena }) => {
+      return prev + ilosc * cena;
+    }, 0);
     this.total = value;
     this.totalBruttoSubject.next(value);
   }
@@ -99,16 +73,9 @@ export class BasketService {
     this.totalBruttoSubject.next(0);
   }
 
-  getProducts(nip?: string) {
-    let params = new HttpParams();
-    if (nip) {
-      params = params.append('nip', nip);
-    }
-
+  getProducts() {
     this.http
-      .get<Product[]>(`${environment.apiUrl}/produkt`, {
-        params,
-      })
+      .get<Product[]>(`http://localhost:90/products/api/produkty`)
       .subscribe((res) => {
         this.produkty = res;
         this.produktySubject.next(res);

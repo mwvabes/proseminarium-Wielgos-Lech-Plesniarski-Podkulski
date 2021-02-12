@@ -9,205 +9,25 @@
   <table *ngIf="data.length > 0" class="table table-striped">
     <tr>
       <th>Nazwa</th>
-      <th>Cena netto</th>
-      <th>VAT</th>
-      <th>Cena brutto</th>
+      <th>Cena</th>
       <th>Ilość</th>
-      <th>Suma netto</th>
-      <th>Suma brutto</th>
+      <th>Suma</th>
     </tr>
     <tr *ngFor="let item of data">
       <td>{{ item.nazwa }}</td>
-      <td>{{ item.cena_netto | currency: "PLN" }}</td>
-      <td>{{ item.procentowa_stawka_vat / 100 | percent }}</td>
-      <td>
-        {{
-          (
-            (item.procentowa_stawka_vat * item.cena_netto) / 100 +
-            item.cena_netto
-          ).toFixed(2) | currency: "PLN"
-        }}
-      </td>
+      <td>{{ item.cena | currency: "PLN" }}</td>
       <td>{{ item.ilosc }}</td>
-      <td>{{ (item.cena_netto * item.ilosc).toFixed(2) | currency: "PLN" }}</td>
-      <td>
-        {{
-          (
-            ((item.procentowa_stawka_vat * item.cena_netto) / 100 +
-              item.cena_netto) *
-            item.ilosc
-          ).toFixed(2) | currency: "PLN"
-        }}
-      </td>
+      <td>{{ (item.cena * item.ilosc).toFixed(2) | currency: "PLN" }}</td>
     </tr>
   </table>
 </div>
-<form [formGroup]="orderForm">
-  <div class="col-md-6">
-    <h4 style="margin-bottom: 20px; color: lightblue">Kontrahent</h4>
-    <div class="input-group">
-      <select class="form-control" formControlName="kontrahentId">
-        <option *ngFor="let item of kontrahenci" [value]="item.id">
-          {{ item.nazwa }}
-        </option>
-      </select>
-    </div>
-    <h4 style="margin-bottom: 20px; color: lightblue">Podmiot</h4>
-    <div class="input-group">
-      <select class="form-control" formControlName="podmiotId">
-        <option *ngFor="let item of podmioty" [value]="item.id">
-          {{ item.nazwa }}
-        </option>
-      </select>
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-primary"
-          (click)="openDodaj(dodajPodmiot)"
-        >
-          Dodaj
-        </button>
-        <button
-          class="btn btn-outline-primary"
-          (click)="openEdytuj(edytujPodmiot)"
-          [disabled]="!orderForm.controls['podmiotId'].value"
-        >
-          Edytuj
-        </button>
-      </div>
-    </div>
-    <h4 style="margin-bottom: 20px; color: lightblue">Priorytet</h4>
-    <div class="input-group">
-      <select class="form-control" formControlName="priorytet">
-        <option value="ECONOMY">
-          {{ "priorityEnum.ECONOMY" | translate }}
-        </option>
-        <option value="STANDARD">
-          {{ "priorityEnum.STANDARD" | translate }}
-        </option>
-        <option value="FAST">
-          {{ "priorityEnum.FAST" | translate }}
-        </option>
-      </select>
-    </div>
 
-    <div class="input-group">
-      <button
-        class="btn btn-outline-primary"
-        (click)="createOrder()"
-        [disabled]="!orderForm.valid || produkty.length === 0"
-      >
-        Złóż zamówienie
-      </button>
-    </div>
-  </div>
-</form>
-
-<ng-template #dodajPodmiot let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Dodaj Podmiot</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="newPodmiotForm">
-      <div class="form-group">
-        <label for="formGroupExampleInput">Nazwa:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput"
-          formControlName="nazwa"
-        />
-      </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Adres:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput2"
-          formControlName="adres"
-        />
-      </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">NIP:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput2"
-          formControlName="nip"
-        />
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-      [disabled]="!newPodmiotForm.valid"
-    >
-      Zapisz
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #edytujPodmiot let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Edytuj podmiot</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="editPodmiotForm">
-      <div class="form-group">
-        <label for="formGroupExampleInput">Nazwa:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput"
-          formControlName="nazwa"
-        />
-      </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Adres:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput2"
-          formControlName="adres"
-        />
-      </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">NIP:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput2"
-          formControlName="nip"
-        />
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-      [disabled]="!editPodmiotForm.valid"
-    >
-      Zapisz
-    </button>
-  </div>
-</ng-template>
+<div class="input-group">
+  <button
+    class="btn btn-outline-primary"
+    (click)="createOrder()"
+    [disabled]="produkty.length === 0"
+  >
+    Złóż zamówienie
+  </button>
+</div>

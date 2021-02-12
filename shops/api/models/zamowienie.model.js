@@ -2,14 +2,13 @@ module.exports = (sequelize, Sequelize) => {
   const Zamowienie = sequelize.define(
     "zamowienia",
     {
-      priorytet: {
-        type: Sequelize.ENUM("ECONOMY", "STANDARD", "FAST"),
+      userId: {
+        type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Priorytet jest wymagany!",
-          },
-        },
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
     },
     {
