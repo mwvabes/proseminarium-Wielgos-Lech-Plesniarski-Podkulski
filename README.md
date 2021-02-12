@@ -1,5 +1,7 @@
 # proseminarium-Wielgos-Lech-Plesniarski-Podkulski
 
+Stabilna wersja aplikacji znajduje się w branchu **main**.
+
 ## Projekt
 
 Uczelniany projekt zaliczeniowy z przedmiotu **Proseminarium**. 
